@@ -59,7 +59,7 @@ namespace AlprApp.Service.CustomActions
 
                 //// zou moeten werken maar retured null
                 //var responseContent = result.Content.ReadAsAsync<AlprWithHeader>().Result;
-                //alprReturn = responseContent.results[0];3
+                //alprReturn = responseContent.results[0];
 
                 var responseContent = result.Content.ReadAsStringAsync().Result;
                 alprWithHeader = JsonConvert.DeserializeObject<AlprWithHeader>(responseContent);

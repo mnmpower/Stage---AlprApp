@@ -1,0 +1,20 @@
+{
+  "Groups": {},
+  "Rights": [
+    {
+      "Id": "5bb8fd1f-3b44-4570-bbd9-e96ef0a92ac2",
+      "Resource": "ProcessImage/AlprApp.AlprData",
+      "UserId": "d3bd3312-0730-43d9-9bf4-9e14c75b00f7"
+    },
+    {
+      "Id": "8791d8c8-a4bf-427c-8e62-6b898cfd7598",
+      "Resource": "Query/AlprApp",
+      "UserId": "d3bd3312-0730-43d9-9bf4-9e14c75b00f7"
+    },
+    {
+      "Id": "4cdebdcb-b562-4cbd-90f3-821050cc7560",
+      "Resource": "QueryReadEditNew/AlprApp.AlprData",
+      "UserId": "d3bd3312-0730-43d9-9bf4-9e14c75b00f7"
+    }
+  ]
+}

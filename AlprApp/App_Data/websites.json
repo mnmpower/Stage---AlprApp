@@ -1,0 +1,20 @@
+{
+  "Websites": {
+    "Admin": {
+      "Label": {
+        "en": "Admin"
+      },
+      "Type": 2,
+      "Bindings": [
+        "*/Admin"
+      ]
+    },
+    "Default": {
+      "Type": 2,
+      "Bindings": [
+        "*"
+      ],
+      "DefaultUser": "e47e0a4f-916e-4f08-b438-7592a86278c4"
+    }
+  }
+}

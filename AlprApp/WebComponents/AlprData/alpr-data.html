@@ -11,9 +11,25 @@
                 <form-signin class="align-baseline">
                     <div class="text-center mb-4 ">
                         <img class="mb-4" src="/Resources/Rhea nv.png" alt="" width="72" height="72">
-                        <h1 class="h3 mb-3 font-weight-normal">Rhea N.V.</h1>
-                        <p>Klik op de knop hieronder om een foto te trekken van een nummerplaat. Vul vervolgens een melding in met wat het probleem is en klik op verzenden.</p>
+                        <h1 class="h3 mb-3 font-weight-normal">Rhea N.V. - Parking problemen</h1>
+                        <p>Selecteer Het probleem of schrijf zelf een nieuwe melding. Trek daarna een foto van de nummerplaat en verifieer dat deze juist is. Als alles ingevuld is, klik dan op verzenden.</p>
+                         <!--<p>Klik op de knop hieronder om een foto te trekken van een nummerplaat. Vul vervolgens een melding in met wat het probleem is en klik op verzenden.</p>-->
                     </div>
+
+                    <!----------------------->
+                    <!-- Dropdown Probleem -->
+                    <!----------------------->
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Wat is het probleem?</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option id="zelf" value="0">Zelf een melding schrijven</option>
+                            <!--<option is="dom-repeat" items="[[voorgemaakteMeldingen.type]]">1</option>-->
+                        </select>
+                    </div>
+
+                    <textarea class="form-control mb-3" id="inputSelfWrittenMelding" rows="3"></textarea>
+
+
                     <div class="row">
                         <div class="col-6">
 

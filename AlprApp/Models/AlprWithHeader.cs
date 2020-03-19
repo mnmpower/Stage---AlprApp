@@ -1,15 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Vidyano.Core.Extensions;
-using Vidyano.Service;
-using Vidyano.Service.Charts;
-using Vidyano.Service.Repository;
+using System.Web;
 
-namespace AlprApp.Service
+namespace AlprApp.Models
 {
-
     public class AlprWithHeader
     {
         public string version { get; set; }
@@ -20,9 +15,5 @@ namespace AlprApp.Service
         public float processing_time_ms { get; set; }
         public string[] regions_of_interest { get; set; }
         public AlprReturn[] results { get; set; }
-
-    }
-    public class AlprWithHeaderActions : PersistentObjectActionsReference<AlprAppEntityModelContainer, object /* replace with .NET class if needed: AlprWithHeader */>
-    {
     }
 }

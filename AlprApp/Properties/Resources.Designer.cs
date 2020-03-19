@@ -63,6 +63,36 @@ namespace AlprApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _1PXL907 {
+            get {
+                object obj = ResourceManager.GetObject("_1PXL907", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] BATMAN1 {
+            get {
+                object obj = ResourceManager.GetObject("BATMAN1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap H786POJ {
+            get {
+                object obj = ResourceManager.GetObject("H786POJ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Rhea_nv {
             get {
                 object obj = ResourceManager.GetObject("Rhea_nv", resourceCulture);

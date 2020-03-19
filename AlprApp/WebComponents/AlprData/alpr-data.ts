@@ -4,6 +4,9 @@ namespace AlprApp.WebComponents {
             alprDataPo: {
                 type: Object,
                 readOnly: true
+            },
+            voorgemaakteMeldingen: {
+                type: Array
             }
         }
     }, "aa")
@@ -12,6 +15,7 @@ namespace AlprApp.WebComponents {
         private _setAlprDataPo: (value: Vidyano.PersistentObject) => void;
 
         public input;
+        public voorgemaakteMeldingen = ["dddd", "bbbb", "aaaa"];
 
         async attached() {
             super.attached();
@@ -47,8 +51,7 @@ namespace AlprApp.WebComponents {
                         await tempThis.alprDataPo.setAttributeValue("ImageData", src);
                         var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
                         tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
-
-                        //nakijken of Plate in DB is
+                        
 
                     },
                     false

@@ -3,3 +3,10 @@
 
 # Packages
 packages/*
+AlprApp/bin/AlprApp.dll
+
+AlprApp/bin/AlprApp.pdb
+
+AlprApp/obj/Debug/AlprApp.dll
+
+AlprApp/obj/Debug/AlprApp.pdb

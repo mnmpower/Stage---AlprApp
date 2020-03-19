@@ -30,7 +30,7 @@ namespace AlprApp.WebComponents {
                     "load",
                     async function () {
 
-                        //mijn code
+                        //mijn code om de image te tonen
                         var img = document.createElement('img');
                         img.setAttribute('src', reader.result.toString());
                         img.setAttribute('class', "thumb-image img-fluid");
@@ -42,11 +42,14 @@ namespace AlprApp.WebComponents {
                         imageHolder.appendChild(img);
                         //tot hier
 
-
+                        // code om image na te kijken op nummerplaat
                         var src = reader.result;
                         await tempThis.alprDataPo.setAttributeValue("ImageData", src);
                         var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
                         tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
+
+                        //nakijken of Plate in DB is
+
                     },
                     false
                 );

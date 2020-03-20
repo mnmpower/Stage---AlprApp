@@ -70,6 +70,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Console, Version=4.0.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.1\lib\net46\System.Console.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -102,20 +105,56 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\202003200929260_Add-Person-Class.cs" />
+    <Compile Include="Migrations\202003200929260_Add-Person-Class.Designer.cs">
+      <DependentUpon>202003200929260_Add-Person-Class.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003200948321_Add-Company-Class.cs" />
+    <Compile Include="Migrations\202003200948321_Add-Company-Class.Designer.cs">
+      <DependentUpon>202003200948321_Add-Company-Class.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003200956094_Add-PremadeMessage-Class.cs" />
+    <Compile Include="Migrations\202003200956094_Add-PremadeMessage-Class.Designer.cs">
+      <DependentUpon>202003200956094_Add-PremadeMessage-Class.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003201008236_Add-Car-Class.cs" />
+    <Compile Include="Migrations\202003201008236_Add-Car-Class.Designer.cs">
+      <DependentUpon>202003201008236_Add-Car-Class.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003201012420_Add-PersonCar-Class.cs" />
+    <Compile Include="Migrations\202003201012420_Add-PersonCar-Class.Designer.cs">
+      <DependentUpon>202003201012420_Add-PersonCar-Class.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003201018572_Add-Message-Class.cs" />
+    <Compile Include="Migrations\202003201018572_Add-Message-Class.Designer.cs">
+      <DependentUpon>202003201018572_Add-Message-Class.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003201021578_Renaming-Tabels.cs" />
+    <Compile Include="Migrations\202003201021578_Renaming-Tabels.Designer.cs">
+      <DependentUpon>202003201021578_Renaming-Tabels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AlprData.cs" />
     <Compile Include="Models\AlprReturn.cs" />
     <Compile Include="Models\AlprWithHeader.cs" />
-    <Compile Include="Models\Coordinate.cs" />
+    <Compile Include="Models\CoordinateActions.cs" />
     <Compile Include="Models\PlateObject.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service\Actions\CarActions.cs" />
+    <Compile Include="Service\Actions\CompanyActions.cs" />
+    <Compile Include="Service\Actions\MessageActions.cs" />
+    <Compile Include="Service\Actions\PersonActions.cs" />
+    <Compile Include="Service\Actions\PersonCarActions.cs" />
+    <Compile Include="Service\Actions\PremadeMessageActions.cs" />
     <Compile Include="Service\AlprAppBusinessRules.cs" />
     <Compile Include="Service\AlprAppEntityModelContainer.cs" />
     <Compile Include="Service\AlprAppQueries.cs" />
     <Compile Include="Service\AlprAppWeb.cs" />
+    <Compile Include="Service\AlprDataActions.cs" />
     <Compile Include="Service\CustomActions\ProcessImage.cs" />
     <Compile Include="Service\PersistentObjectActionsReference.cs" />
     <Content Include="App_Data\Websites\Admin\index.html" />
@@ -129,7 +168,6 @@
     <None Include="Resources\1PXL907.jpg" />
     <None Include="Resources\BATMAN1.jfif" />
     <None Include="Resources\H786POJ.jpg" />
-    <Content Include="Style\main.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -170,6 +208,27 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\202003200929260_Add-Person-Class.resx">
+      <DependentUpon>202003200929260_Add-Person-Class.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003200948321_Add-Company-Class.resx">
+      <DependentUpon>202003200948321_Add-Company-Class.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003200956094_Add-PremadeMessage-Class.resx">
+      <DependentUpon>202003200956094_Add-PremadeMessage-Class.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003201008236_Add-Car-Class.resx">
+      <DependentUpon>202003201008236_Add-Car-Class.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003201012420_Add-PersonCar-Class.resx">
+      <DependentUpon>202003201012420_Add-PersonCar-Class.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003201018572_Add-Message-Class.resx">
+      <DependentUpon>202003201018572_Add-Message-Class.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003201021578_Renaming-Tabels.resx">
+      <DependentUpon>202003201021578_Renaming-Tabels.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

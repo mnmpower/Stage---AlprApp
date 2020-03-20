@@ -1,25 +1,27 @@
 namespace AlprApp.WebComponents {
     @Vidyano.WebComponents.WebComponent.register({
         properties: {
+            voorgemaakteMeldingen: Object,
             alprDataPo: {
                 type: Object,
                 readOnly: true
             },
-            voorgemaakteMeldingen: {
-                type: Array
-            }
         }
     }, "aa")
     export class AlprData extends Vidyano.WebComponents.WebComponent {
         readonly alprDataPo: Vidyano.PersistentObject;
+        voorgemaakteMeldingen: Vidyano.PersistentObject[];
+
         private _setAlprDataPo: (value: Vidyano.PersistentObject) => void;
 
         public input;
-        public voorgemaakteMeldingen = ["dddd", "bbbb", "aaaa"];
+
+
 
         async attached() {
             super.attached();
             this._setAlprDataPo(await this.app.service.getPersistentObject(null, "AlprApp.AlprData", null));
+
         }
 
         private _imageCaptured(e: Event) {

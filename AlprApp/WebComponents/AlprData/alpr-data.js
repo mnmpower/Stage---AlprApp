@@ -6,9 +6,7 @@ var AlprApp;
         var AlprData = /** @class */ (function (_super) {
             __extends(AlprData, _super);
             function AlprData() {
-                var _this = _super !== null && _super.apply(this, arguments) || this;
-                _this.voorgemaakteMeldingen = ["dddd", "bbbb", "aaaa"];
-                return _this;
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             AlprData.prototype.attached = function () {
                 return __awaiter(this, void 0, void 0, function () {
@@ -63,13 +61,11 @@ var AlprApp;
             AlprData = __decorate([
                 Vidyano.WebComponents.WebComponent.register({
                     properties: {
+                        voorgemaakteMeldingen: Object,
                         alprDataPo: {
                             type: Object,
                             readOnly: true
                         },
-                        voorgemaakteMeldingen: {
-                            type: Array
-                        }
                     }
                 }, "aa")
             ], AlprData);

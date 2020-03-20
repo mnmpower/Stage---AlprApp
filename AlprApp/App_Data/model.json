@@ -1362,7 +1362,7 @@
               "$id": "PersistentObjectAttribute:c0a8c25f-6e42-3bee-b7ed-598fd332e14b",
               "Id": "c0a8c25f-6e42-3bee-b7ed-598fd332e14b",
               "Offset": 30,
-              "Name": "Message",
+              "Name": "Messages",
               "Label": {
                 "en": "Message"
               },
@@ -1380,9 +1380,110 @@
             }
           ],
           "Queries": []
+        },
+        "645a9601-cf0c-3160-974d-69ed5e6b5d70": {
+          "$id": "PersistentObject:645a9601-cf0c-3160-974d-69ed5e6b5d70",
+          "SchemaName": "AlprApp",
+          "Type": "Person",
+          "Salt": "oIDKSvCcIGeFD39J4dRYfNgaQwkTCwitowc0eiTU5-M",
+          "Breadcrumb": "{Email}",
+          "ContextProperty": "Persons",
+          "Label": {
+            "en": "Person"
+          },
+          "Groups": [
+            {
+              "$id": "PersistentObjectAttributeGroup:dcfb62a0-dcb7-47ce-adfc-4893c0f623be",
+              "Id": "dcfb62a0-dcb7-47ce-adfc-4893c0f623be"
+            }
+          ],
+          "Tabs": [
+            {
+              "$id": "PersistentObjectAttributeTab:3f5687c1-6c73-4c33-9fb3-198767119fb1",
+              "Id": "3f5687c1-6c73-4c33-9fb3-198767119fb1"
+            }
+          ],
+          "Attributes": [
+            {
+              "$id": "PersistentObjectAttribute:e3d15c1d-4285-3e05-9b3b-7d70e9e184d1",
+              "Id": "e3d15c1d-4285-3e05-9b3b-7d70e9e184d1",
+              "Offset": 30,
+              "Rules": "IsEmail",
+              "Name": "Email",
+              "Label": {
+                "en": "Email"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:dcfb62a0-dcb7-47ce-adfc-4893c0f623be"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:3f5687c1-6c73-4c33-9fb3-198767119fb1"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:91699372-5c64-3156-be1c-fe737db53a91",
+              "Id": "91699372-5c64-3156-be1c-fe737db53a91",
+              "Offset": 10,
+              "Name": "FristName",
+              "Label": {
+                "en": "Frist name"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:dcfb62a0-dcb7-47ce-adfc-4893c0f623be"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:3f5687c1-6c73-4c33-9fb3-198767119fb1"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:eae9f092-2529-32f6-8edf-315e2d9f8610",
+              "Id": "eae9f092-2529-32f6-8edf-315e2d9f8610",
+              "Offset": 20,
+              "Name": "LastName",
+              "Label": {
+                "en": "Last name"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:dcfb62a0-dcb7-47ce-adfc-4893c0f623be"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:3f5687c1-6c73-4c33-9fb3-198767119fb1"
+              }
+            }
+          ],
+          "Queries": []
         }
       },
-      "Queries": {}
+      "Queries": {
+        "26f175c1-d733-4d42-b3c1-c5e19a44ec9a": {
+          "$id": "Query:26f175c1-d733-4d42-b3c1-c5e19a44ec9a",
+          "Source": "Database.Persons",
+          "AutoQuery": true,
+          "Name": "Persons",
+          "Label": {
+            "en": "Persons"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:645a9601-cf0c-3160-974d-69ed5e6b5d70"
+          },
+          "Columns": []
+        }
+      }
     }
   },
   "ProgramUnits": [
@@ -1397,5 +1498,6 @@
   ],
   "Reports": [],
   "ServiceVersion": "5.44.0+6e65421",
+  "ModelHash": "5c6HpzeVFzOtXs4eg0K06xlqcaZPNRszOfHkK+xEkZ8=",
   "SeederHash": "dNjUy9U/waF+QkKW/VqUqzBx6hSr96TA/komargs96Y="
 }

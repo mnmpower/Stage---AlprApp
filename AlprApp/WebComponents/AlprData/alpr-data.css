@@ -32,3 +32,6 @@
 :host textarea {
   max-height: 100px;
   min-height: 100px; }
+
+:host .fullWidth {
+  width: 100vw; }

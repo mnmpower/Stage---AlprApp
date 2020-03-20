@@ -16,6 +16,8 @@ namespace AlprApp.Service.CustomActions
         static HttpClient client = new HttpClient();
         public Boolean plateInDB;
 
+
+
         public override PersistentObject Execute(CustomActionArgs e)
         {
             //declaration objects

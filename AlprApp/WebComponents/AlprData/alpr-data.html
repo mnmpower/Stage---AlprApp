@@ -4,69 +4,75 @@
 
         <!--HIER STARTEN MET BODY-->
 
-        
 
-        <div class="container">
-            <div class="my-4">
-                <form-signin class="align-baseline">
-                    <div class="text-center mb-4 ">
-                        <img class="mb-4" src="/Resources/Rhea nv.png" alt="" width="72" height="72">
-                        <h1 class="h3 mb-3 font-weight-normal">Rhea N.V. - Parking problemen</h1>
-                        <p>Selecteer Het probleem of schrijf zelf een nieuwe melding. Trek daarna een foto van de nummerplaat en verifieer dat deze juist is. Als alles ingevuld is, klik dan op verzenden.</p>
-                         <!--<p>Klik op de knop hieronder om een foto te trekken van een nummerplaat. Vul vervolgens een melding in met wat het probleem is en klik op verzenden.</p>-->
-                    </div>
+        <div class="fullWidth">
+            <div class="container">
+                <div class="my-4">
+                    <form-signin class="align-baseline">
+                        <div class="text-center mb-4 ">
+                            <img class="mb-4" src="/Resources/Rhea nv.png" alt="" width="72" height="72">
+                            <h1 class="h3 mb-3 font-weight-normal">Rhea N.V. - Parking problemen</h1>
+                            <p>Selecteer Het probleem of schrijf zelf een nieuwe melding. Trek daarna een foto van de nummerplaat en verifieer dat deze juist is. Als alles ingevuld is, klik dan op verzenden.</p>
+                            <!--<p>Klik op de knop hieronder om een foto te trekken van een nummerplaat. Vul vervolgens een melding in met wat het probleem is en klik op verzenden.</p>-->
+                        </div>
 
-                    <!----------------------->
-                    <!-- Dropdown Probleem -->
-                    <!----------------------->
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Wat is het probleem?</label>
+                        <!----------------------->
+                        <!-- Dropdown Probleem -->
+                        <!----------------------->
+                        <label for="exampleFormControlSelect1">Selecteer een opmerking.</label>
                         <select class="form-control" id="exampleFormControlSelect1">
                             <option id="zelf" value="0">Zelf een melding schrijven</option>
-                            <!--<option is="dom-repeat" items="[[voorgemaakteMeldingen.type]]">1</option>-->
                         </select>
-                    </div>
+                        <!--<div class="form-group">
+                            <template is="dom-repeat" items="[[voorgemaakteMeldingen]]" as="melding">
 
-                    <textarea class="form-control mb-3" id="inputSelfWrittenMelding" rows="3"></textarea>
+                                <vi-persistent-object-attribute-presentor attribute="[[melding.attributes.Meldingen]]"></vi-persistent-object-attribute-presentor>
 
 
-                    <div class="row">
-                        <div class="col-6">
+                            </template>
+                        </div>-->
 
-                            <!------------------->
-                            <!-- IMAGE UPLOADS -->
-                            <!------------------->
+                        <textarea class="form-control mb-3" id="inputSelfWrittenMelding" rows="3">[[voorgemaakteMeldingen.]]</textarea>
 
-                            <input id="file" type="file" accept="image/*" capture="camera">
-                            <label for="fileUpload" class="custom-fileUpload vc-prepare childDiv">
-                                <i class="material-icons md-18 mr-3 vertical-center">cloud_upload</i>Neem een foto
-                            </label>
-                            <input id="fileUpload" type="file" accept="image/*" capture="camera" on-change="_imageCaptured" />
+
+                        <div class="row">
+                            <div class="col-6">
+
+                                <!------------------->
+                                <!-- IMAGE UPLOADS -->
+                                <!------------------->
+
+                                <input id="file" type="file" accept="image/*" capture="camera">
+                                <label for="fileUpload" class="custom-fileUpload vc-prepare childDiv">
+                                    <i class="material-icons md-18 mr-3 vertical-center">cloud_upload</i>Neem een foto
+                                </label>
+                                <input id="fileUpload" type="file" accept="image/*" capture="camera" on-change="_imageCaptured" />
+                            </div>
+                            <div id="image-holder" class="col-6"> </div>
                         </div>
-                        <div id="image-holder" class="col-6"> </div>
-                    </div>
-                    <div id="b64"></div>
+                        <div id="b64"></div>
 
 
-                    <div id="stap1">
+                        <div id="stap1">
 
-                    </div>
+                        </div>
 
-                    <div class="form-label-group mt-3">
-                        <label for="inputEmail" class="text-center">Is de nummerplaat correct?</label>
-                        <span id="licensePlate"></span>
+                        <div class="form-label-group mt-3">
+                            <label class="text-center">Is de nummerplaat correct?</label>
+                            <span id="licensePlate"></span>
 
-                    </div>
+                        </div>
 
-                    <!----------------->
-                    <!-- Button next -->
-                    <!----------------->
-                    <button id="send" class="btn btn-lg btn-warning btn-block mt-3 mb-3" onclick="_sendImage">
-                        Verstuur
-                    </button>
+                        <!----------------->
+                        <!-- Button next -->
+                        <!----------------->
+                        <button id="send" class="btn btn-lg btn-warning btn-block mt-3 mb-3">
+                            Verstuur
+                        </button>
 
-                    <p class="mt-5 mb-3 text-muted text-center">&copy; Maarten Michiels</p>
-                </form-signin>
+                        <p class="mt-5 mb-3 text-muted text-center">&copy; Maarten Michiels</p>
+                    </form-signin>
+                </div>
             </div>
         </div>
     </template>

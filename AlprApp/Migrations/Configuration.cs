@@ -41,7 +41,7 @@ namespace AlprApp.Migrations
 
             context.PremadeMessages.AddOrUpdate(
                 new PremadeMessage {PremadeMessageID=1, Text="De lampen van je wagen branden nog!" },
-                new PremadeMessage {PremadeMessageID=2, Text="De radio van je wagen staat now aan!" },
+                new PremadeMessage {PremadeMessageID=2, Text="De radio van je wagen staat nog aan!" },
                 new PremadeMessage {PremadeMessageID=3, Text="Er staat een raam open van je wagen!" }
             );
             context.SaveChanges();

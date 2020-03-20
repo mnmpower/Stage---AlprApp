@@ -6,12 +6,8 @@ namespace AlprApp.WebComponents {
                 type: Object,
                 readOnly: true
             },
-            //templateDataPo: {
-            //    type: Object,
-            //    readOnly: true
-            //},
             messages: {
-                type: String,
+                type: Array,
                 readOnly: true
             },
                 
@@ -20,14 +16,10 @@ namespace AlprApp.WebComponents {
     }, "aa")
     export class AlprData extends Vidyano.WebComponents.WebComponent {
         readonly alprDataPo: Vidyano.PersistentObject;
-        readonly messages: String;
-        //readonly templateDataPo: Vidyano.PersistentObject;
-        //messagesA: Array<string>;
-        //messagesS: string;
+        readonly messages: { id: number, text: string }[];
 
         private _setAlprDataPo: (value: Vidyano.PersistentObject) => void;
-        private _setMessages: (value: String) => void;
-        //private _setTemplateDataPo: (value: Vidyano.PersistentObject) => void;
+        private _setMessages: (value: Array<{ id: number, text: string } >) => void;
 
         public input;
 
@@ -36,9 +28,29 @@ namespace AlprApp.WebComponents {
         async attached() {
             super.attached();
             this._setAlprDataPo(await this.app.service.getPersistentObject(null, "AlprApp.AlprData", null));
-            //this._setMessages = this.alprDataPo.getAttributeValue("Messages");
-            alert(this.alprDataPo.getAttributeValue("Messages"));
-            this._setMessages(this.alprDataPo.getAttributeValue("Messages"));
+
+            // ObjectArray declareren
+            let messageArray: { id: number, text: string }[] = [];
+
+            // Samengestelde string 1:DDD;2:DDDD;...
+            let messagesString = this.alprDataPo.getAttributeValue("Messages");
+
+            // Array met string 1:DDD, string 2:DDDD ...
+            let messagesMetID = messagesString.split(';');
+
+             // String splitsen en omzetten naar Object
+            for (var i = 0; i < messagesMetID.length - 1; i++) {
+                var splitsen = messagesMetID[i].split(':');
+                var message = {
+                    id: splitsen[0],
+                    text: splitsen[1]
+                }
+                 // Object toevoegen aan Array
+                messageArray.push(message);
+            }
+
+            // Array zetten als property
+            this._setMessages(messageArray);
         }
 
         private _imageCaptured(e: Event) {
@@ -81,6 +93,12 @@ namespace AlprApp.WebComponents {
 
         private DoeIets(e: Event) {
             alert("15");
+        }
+
+        private _WriteOwnMessage(str: String) {
+            debugger;
+            //Hier value checken van dropdown;
+            return false;
         }
     }
 }

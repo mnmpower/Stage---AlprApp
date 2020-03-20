@@ -10,7 +10,7 @@ var AlprApp;
             }
             AlprData.prototype.attached = function () {
                 return __awaiter(this, void 0, void 0, function () {
-                    var _a;
+                    var _a, messageArray, messagesString, messagesMetID, i, splitsen, message;
                     return __generator(this, function (_b) {
                         switch (_b.label) {
                             case 0:
@@ -19,9 +19,21 @@ var AlprApp;
                                 return [4 /*yield*/, this.app.service.getPersistentObject(null, "AlprApp.AlprData", null)];
                             case 1:
                                 _a.apply(this, [_b.sent()]);
-                                //this._setMessages = this.alprDataPo.getAttributeValue("Messages");
-                                alert(this.alprDataPo.getAttributeValue("Messages"));
-                                this._setMessages(this.alprDataPo.getAttributeValue("Messages"));
+                                messageArray = [];
+                                messagesString = this.alprDataPo.getAttributeValue("Messages");
+                                messagesMetID = messagesString.split(';');
+                                // String splitsen en omzetten naar Object
+                                for (i = 0; i < messagesMetID.length - 1; i++) {
+                                    splitsen = messagesMetID[i].split(':');
+                                    message = {
+                                        id: splitsen[0],
+                                        text: splitsen[1]
+                                    };
+                                    // Object toevoegen aan Array
+                                    messageArray.push(message);
+                                }
+                                // Array zetten als property
+                                this._setMessages(messageArray);
                                 return [2 /*return*/];
                         }
                     });
@@ -64,6 +76,11 @@ var AlprApp;
             AlprData.prototype.DoeIets = function (e) {
                 alert("15");
             };
+            AlprData.prototype._WriteOwnMessage = function (str) {
+                debugger;
+                //Hier value checken van dropdown;
+                return false;
+            };
             AlprData = __decorate([
                 Vidyano.WebComponents.WebComponent.register({
                     properties: {
@@ -72,12 +89,8 @@ var AlprApp;
                             type: Object,
                             readOnly: true
                         },
-                        //templateDataPo: {
-                        //    type: Object,
-                        //    readOnly: true
-                        //},
                         messages: {
-                            type: String,
+                            type: Array,
                             readOnly: true
                         },
                     }

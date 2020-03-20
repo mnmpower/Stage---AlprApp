@@ -12,7 +12,7 @@
                         <div class="text-center mb-4 ">
                             <img class="mb-4" src="/Resources/Rhea nv.png" alt="" width="72" height="72">
                             <h1 class="h3 mb-3 font-weight-normal">Rhea N.V. - Parking problemen</h1>
-                            <p>Selecteer Het probleem of schrijf zelf een nieuwe melding. Trek daarna een foto van de nummerplaat en verifieer dat deze juist is. Als alles ingevuld is, klik dan op verzenden.</p>
+                            <p>Selecteer Het probleem of schrijf zelf een opmerking. Trek daarna een foto van de nummerplaat en verifieer dat deze juist is. Als alles ingevuld is, klik dan op verzenden.</p>
                             <!--<p>Klik op de knop hieronder om een foto te trekken van een nummerplaat. Vul vervolgens een melding in met wat het probleem is en klik op verzenden.</p>-->
                         </div>
 
@@ -20,22 +20,22 @@
                         <!-- Dropdown Probleem -->
                         <!----------------------->
                         <label for="exampleFormControlSelect1">Selecteer een opmerking.</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option id="zelf" value="0">Zelf een melding schrijven</option>
-                            
-                            <option value="[[messages]]">[[messages]]</option>
-                            <!--<template is="dom-repeat" items="[[messages]]" as="melding">
-                                
+                        <select class="form-control" id="problemDropdown">
 
+                            <option id="zelf" value="0">Ik schrijf zelf een melding...</option>
+                            <template is="dom-repeat" items="{{messages}}" as="message">
+                                <option value="[[message.id]]">[[message.text]]</option>
 
-
-                            </template>-->
+                            </template>
                         </select>
                         <div class="form-group">
 
                         </div>
 
-                        <textarea class="form-control mb-3" id="inputSelfWrittenMelding" rows="3">[[voorgemaakteMeldingen]]</textarea>
+                        <!---------------------->
+                        <!-- TextArea Melding -->
+                        <!---------------------->
+                        <textarea class="form-control mb-3" id="inputSelfWrittenMelding" rows="3" hidden$="[[_WriteOwnMessage('ddd')]]"></textarea>
 
 
                         <div class="row">
@@ -69,7 +69,7 @@
                         <!----------------->
                         <!-- Button next -->
                         <!----------------->
-                        <button id="send" class="btn btn-lg btn-warning btn-block mt-3 mb-3"  on-tap="DoeIets">
+                        <button id="send" class="btn btn-lg btn-warning btn-block mt-3 mb-3" on-tap="DoeIets">
                             Verstuur
                         </button>
 

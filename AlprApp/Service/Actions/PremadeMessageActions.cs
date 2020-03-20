@@ -14,7 +14,6 @@ namespace AlprApp.Service.Actions
 
         public class PremadeMessageActions : PersistentObjectActionsReference<AlprAppEntityModelContainer, PremadeMessage>
         {
-
         }
     }
 }

@@ -157,6 +157,7 @@
     <Compile Include="Service\AlprDataActions.cs" />
     <Compile Include="Service\CustomActions\ProcessImage.cs" />
     <Compile Include="Service\PersistentObjectActionsReference.cs" />
+    <Compile Include="Service\TemplateDataActions.cs" />
     <Content Include="App_Data\Websites\Admin\index.html" />
     <Content Include="App_Data\Websites\Default\index.html" />
     <Content Include="favicon.ico" />
@@ -184,9 +185,18 @@
     <Content Include="WebComponents\AlprData\alpr-data.css">
       <DependentUpon>alpr-data.scss</DependentUpon>
     </Content>
+    <Content Include="WebComponents\AlprData\alpr-data.es5.js">
+      <DependentUpon>alpr-data.js</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WebComponents\AlprData\alpr-data.es5.min.js">
+      <DependentUpon>alpr-data.es5.js</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="WebComponents\AlprData\alpr-data.html" />
     <Content Include="WebComponents\AlprData\alpr-data.js">
       <DependentUpon>alpr-data.ts</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
     <Content Include="tsconfig.json" />
@@ -202,7 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\typings\vidyano\vidyano.d.ts" />
-    <TypeScriptCompile Include="WebComponents\AlprData\alpr-data.ts" />
+    <TypeScriptCompile Include="WebComponents\AlprData\alpr-data.ts">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

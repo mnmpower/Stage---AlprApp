@@ -2,5 +2,9 @@
   {
     "outputFile": "WebComponents/AlprData/alpr-data.css",
     "inputFile": "WebComponents/AlprData/alpr-data.scss"
+  },
+  {
+    "outputFile": "WebComponents/AlprData/alpr-data.es5.js",
+    "inputFile": "WebComponents/AlprData/alpr-data.js"
   }
 ]

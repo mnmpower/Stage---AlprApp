@@ -1,9 +1,9 @@
-"use strict";
+﻿"use strict";
 var AlprApp;
 (function (AlprApp) {
     var WebComponents;
     (function (WebComponents) {
-        var AlprData = /** @class */ (function (_super) {
+        var AlprData = /** @class */(function (_super) {
             __extends(AlprData, _super);
             function AlprData() {
                 return _super !== null && _super.apply(this, arguments) || this;
@@ -19,9 +19,6 @@ var AlprApp;
                                 return [4 /*yield*/, this.app.service.getPersistentObject(null, "AlprApp.AlprData", null)];
                             case 1:
                                 _a.apply(this, [_b.sent()]);
-                                //this._setMessages = this.alprDataPo.getAttributeValue("Messages");
-                                alert(this.alprDataPo.getAttributeValue("Messages"));
-                                this._setMessages(this.alprDataPo.getAttributeValue("Messages"));
                                 return [2 /*return*/];
                         }
                     });
@@ -61,30 +58,18 @@ var AlprApp;
                     reader.readAsDataURL(this.input.files[0]);
                 }
             };
-            AlprData.prototype.DoeIets = function (e) {
-                alert("15");
-            };
-            AlprData = __decorate([
-                Vidyano.WebComponents.WebComponent.register({
-                    properties: {
-                        //voorgemaakteMeldingen: Object,
-                        alprDataPo: {
-                            type: Object,
-                            readOnly: true
-                        },
-                        //templateDataPo: {
-                        //    type: Object,
-                        //    readOnly: true
-                        //},
-                        messages: {
-                            type: String,
-                            readOnly: true
-                        },
+            AlprData = __decorate([Vidyano.WebComponents.WebComponent.register({
+                properties: {
+                    //voorgemaakteMeldingen: Object,
+                    alprDataPo: {
+                        type: Object,
+                        readOnly: true
                     }
-                }, "aa")
-            ], AlprData);
+                }
+            }, "aa")], AlprData);
             return AlprData;
-        }(Vidyano.WebComponents.WebComponent));
+        })(Vidyano.WebComponents.WebComponent);
         WebComponents.AlprData = AlprData;
     })(WebComponents = AlprApp.WebComponents || (AlprApp.WebComponents = {}));
 })(AlprApp || (AlprApp = {}));
+

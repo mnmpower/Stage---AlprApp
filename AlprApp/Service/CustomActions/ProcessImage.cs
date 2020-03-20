@@ -8,6 +8,9 @@ using System.Data.SqlClient;
 using System.Data.OleDb;
 using System.Data;
 using AlprApp.Models;
+using System.Linq;
+using AlprApp.Service.Actions;
+using System.Data.Entity;
 
 namespace AlprApp.Service.CustomActions
 {
@@ -86,7 +89,7 @@ namespace AlprApp.Service.CustomActions
             }
 
             //Check if the plate is in the Database and save as boolean
-            plateInDB = checkIfPlateIsInDatabase(lisencePlate);
+            plateInDB = checkIfPlateIsInDatabaseAsync(lisencePlate);
 
             if (plateInDB)
             {
@@ -104,72 +107,16 @@ namespace AlprApp.Service.CustomActions
 
         }
 
-        private bool checkIfPlateIsInDatabase(string plate)
+        private bool checkIfPlateIsInDatabaseAsync(string plate)
         {
-            try
+            Car car = (Car) Context.Cars.Where(c => c.LicensePlate == plate).FirstOrDefault();
+
+            if (car == null)
             {
-                // Declarating new ConnectionStringBuilder
-                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-
-                // Adding connectionSting in 1 part.
-                builder.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AlprApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-                // Preparing the DB connection
-                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-                {
-                    // Creating SQL command
-                    SqlCommand command = new SqlCommand("SELECT * FROM dbo.Wagen WHERE Nummerplaat = @Nummerplaat", connection);
-
-                    // Linking the parameters
-                    command.Parameters.AddWithValue("Nummerplaat",plate.ToLower());
-
-                    // open the connection
-                    connection.Open();
-
-                    // Execute SQL command and saving output
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    // Creating counter for #row's returned
-                    int counter = 0;
-
-                    // Call Read before accessing data.
-                    while (reader.Read())
-                    {
-                        // Count every returned row
-                        counter++;
-
-                        // Read out every returned row --> Can do somthing with it if needed
-                        ReadSingleRow((IDataRecord)reader);
-                    }
-
-                    // Call Close when done reading.
-                    reader.Close();
-
-                    // Check #rows retuned
-                    if (counter == 0)
-                    {
-                        // Return False cause no plate is found
-                        return false;
-                    }
-                    else
-                    {
-                        // Return True cause at least 1 plate is found
-                        return true;
-                    }
-                }
-            }
-            catch (SqlException e)
-            {
-                // Return False cause somthing went wrong
-                Console.WriteLine(e.ToString());
                 return false;
             }
-        }
 
-        private static void ReadSingleRow(IDataRecord record)
-        {
-            // Format every row from dbo.Wagen to a sting for debug purpuses.
-            string row = (String.Format("{0}, {1}, {2}", record[0], record[1], record[2]));
+            return true;
         }
     }
 }

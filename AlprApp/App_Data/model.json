@@ -1361,8 +1361,8 @@
             {
               "$id": "PersistentObjectAttribute:c0a8c25f-6e42-3bee-b7ed-598fd332e14b",
               "Id": "c0a8c25f-6e42-3bee-b7ed-598fd332e14b",
-              "Offset": 30,
-              "Name": "Messages",
+              "Offset": 40,
+              "Name": "Message",
               "Label": {
                 "en": "Message"
               },
@@ -1376,6 +1376,295 @@
               },
               "Tab": {
                 "$ref": "PersistentObjectAttributeTab:310b1cb9-6995-47de-b1b0-80b77c6d5c5f"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:81a95e48-71b5-3cf0-b22c-4ea36befcbfe",
+              "Id": "81a95e48-71b5-3cf0-b22c-4ea36befcbfe",
+              "Offset": 50,
+              "Name": "Messages",
+              "Label": {
+                "en": "Messages"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:String"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:bc8df00c-0c24-48a3-b14e-4d841c7799de"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:310b1cb9-6995-47de-b1b0-80b77c6d5c5f"
+              }
+            }
+          ],
+          "Queries": []
+        },
+        "8c48c59c-a8a5-3699-a536-c54afe24d725": {
+          "$id": "PersistentObject:8c48c59c-a8a5-3699-a536-c54afe24d725",
+          "SchemaName": "AlprApp",
+          "Type": "Car",
+          "Salt": "L8_Ju61IkTi2_e9C_ovMU8SwIqXUL5X768HhvbgQg2Q",
+          "Breadcrumb": "{CompanyID}",
+          "ContextProperty": "Cars",
+          "Label": {
+            "en": "Car"
+          },
+          "Groups": [
+            {
+              "$id": "PersistentObjectAttributeGroup:81d256a0-1cd1-4458-bbcb-e47dc5a13cd8",
+              "Id": "81d256a0-1cd1-4458-bbcb-e47dc5a13cd8"
+            }
+          ],
+          "Tabs": [
+            {
+              "$id": "PersistentObjectAttributeTab:2141cd4f-d97c-450c-8dd1-c5b3602c7b2d",
+              "Id": "2141cd4f-d97c-450c-8dd1-c5b3602c7b2d"
+            }
+          ],
+          "Attributes": [
+            {
+              "$id": "PersistentObjectAttributeWithReference:9164cd03-7d17-3752-9c01-22af63d1af7f",
+              "$type": "Vidyano.Service.Repository.PersistentObjectAttributeWithReference, Vidyano.Service",
+              "DisplayAttribute": "Name",
+              "LookupId": "66993f53-af3e-4d17-b907-acefc4b80463",
+              "Id": "9164cd03-7d17-3752-9c01-22af63d1af7f",
+              "Offset": 10,
+              "Rules": "Required",
+              "Name": "Company",
+              "Label": {
+                "en": "Company"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:Reference"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:81d256a0-1cd1-4458-bbcb-e47dc5a13cd8"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:2141cd4f-d97c-450c-8dd1-c5b3602c7b2d"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:75c98c13-d676-38ca-9df6-71d6d25dd777",
+              "Id": "75c98c13-d676-38ca-9df6-71d6d25dd777",
+              "Offset": 20,
+              "Name": "LicensePlate",
+              "Label": {
+                "en": "License plate"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:81d256a0-1cd1-4458-bbcb-e47dc5a13cd8"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:2141cd4f-d97c-450c-8dd1-c5b3602c7b2d"
+              }
+            }
+          ],
+          "Queries": []
+        },
+        "d267c5e6-ebf9-3d05-a0ba-4751dafebaf1": {
+          "$id": "PersistentObject:d267c5e6-ebf9-3d05-a0ba-4751dafebaf1",
+          "SchemaName": "AlprApp",
+          "Type": "Company",
+          "Salt": "v9GpdAaWJehOXnbn3RzFI6X808ahzTEOkK7SIvl2h2M",
+          "Breadcrumb": "{Name}",
+          "ContextProperty": "Companies",
+          "Label": {
+            "en": "Company"
+          },
+          "Groups": [
+            {
+              "$id": "PersistentObjectAttributeGroup:eefcd847-4e1b-4182-9fb3-74ac06a9fb29",
+              "Id": "eefcd847-4e1b-4182-9fb3-74ac06a9fb29"
+            }
+          ],
+          "Tabs": [
+            {
+              "$id": "PersistentObjectAttributeTab:3740e5bc-bb8b-458c-b6cc-cd4c65033ea5",
+              "Id": "3740e5bc-bb8b-458c-b6cc-cd4c65033ea5"
+            }
+          ],
+          "Attributes": [
+            {
+              "$id": "PersistentObjectAttribute:2d891c2c-3ee7-3ead-8a64-9d3fc5b9049b",
+              "Id": "2d891c2c-3ee7-3ead-8a64-9d3fc5b9049b",
+              "Offset": 10,
+              "Name": "Name",
+              "Label": {
+                "en": "Name"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:eefcd847-4e1b-4182-9fb3-74ac06a9fb29"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:3740e5bc-bb8b-458c-b6cc-cd4c65033ea5"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:903c66d2-f289-3f85-947b-e67f7cbaffa0",
+              "Id": "903c66d2-f289-3f85-947b-e67f7cbaffa0",
+              "Offset": 30,
+              "Name": "Number",
+              "Label": {
+                "en": "Number"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:eefcd847-4e1b-4182-9fb3-74ac06a9fb29"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:3740e5bc-bb8b-458c-b6cc-cd4c65033ea5"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:cac286a9-6499-325c-b99e-6460274eee2a",
+              "Id": "cac286a9-6499-325c-b99e-6460274eee2a",
+              "Offset": 40,
+              "Name": "PostalCode",
+              "Label": {
+                "en": "Postal code"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:eefcd847-4e1b-4182-9fb3-74ac06a9fb29"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:3740e5bc-bb8b-458c-b6cc-cd4c65033ea5"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:77bdefe7-5720-3ce8-8ec5-0f06d370df12",
+              "Id": "77bdefe7-5720-3ce8-8ec5-0f06d370df12",
+              "Offset": 20,
+              "Name": "Street",
+              "Label": {
+                "en": "Street"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:eefcd847-4e1b-4182-9fb3-74ac06a9fb29"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:3740e5bc-bb8b-458c-b6cc-cd4c65033ea5"
+              }
+            }
+          ],
+          "Queries": []
+        },
+        "5abe028c-d61a-383f-9714-800db41816ba": {
+          "$id": "PersistentObject:5abe028c-d61a-383f-9714-800db41816ba",
+          "SchemaName": "AlprApp",
+          "Type": "Message",
+          "Salt": "SM9j_nfSnpoeUVK82Rs7ZsciAqzXN2ppOFAhToHgnnk",
+          "Breadcrumb": "{PersonCarID}",
+          "ContextProperty": "Messages",
+          "Label": {
+            "en": "Message"
+          },
+          "Groups": [
+            {
+              "$id": "PersistentObjectAttributeGroup:2337da24-0d0f-486a-9bd1-92ad85e5397a",
+              "Id": "2337da24-0d0f-486a-9bd1-92ad85e5397a"
+            }
+          ],
+          "Tabs": [
+            {
+              "$id": "PersistentObjectAttributeTab:65745da6-7de9-486b-ad8f-7b1647e3e4fd",
+              "Id": "65745da6-7de9-486b-ad8f-7b1647e3e4fd"
+            }
+          ],
+          "Attributes": [
+            {
+              "$id": "PersistentObjectAttributeWithReference:bf49c48e-385c-3c05-9c4d-c2abb2871216",
+              "$type": "Vidyano.Service.Repository.PersistentObjectAttributeWithReference, Vidyano.Service",
+              "DisplayAttribute": "CarID",
+              "LookupId": "54fd1386-46ad-4122-9fca-d85d83419e6e",
+              "Id": "bf49c48e-385c-3c05-9c4d-c2abb2871216",
+              "Offset": 10,
+              "Rules": "Required",
+              "Name": "PersonCar",
+              "Label": {
+                "en": "Person car"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:Reference"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:2337da24-0d0f-486a-9bd1-92ad85e5397a"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:65745da6-7de9-486b-ad8f-7b1647e3e4fd"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttributeWithReference:39facf87-daf6-328e-b160-c011d4b93876",
+              "$type": "Vidyano.Service.Repository.PersistentObjectAttributeWithReference, Vidyano.Service",
+              "DisplayAttribute": "Text",
+              "LookupId": "5eaadf44-b377-4b61-bb78-8cacb0ec75f2",
+              "Id": "39facf87-daf6-328e-b160-c011d4b93876",
+              "Offset": 20,
+              "Name": "PremadeMessage",
+              "Label": {
+                "en": "Premade message"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:Reference"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:2337da24-0d0f-486a-9bd1-92ad85e5397a"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:65745da6-7de9-486b-ad8f-7b1647e3e4fd"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:156e3afb-71ac-359e-ad23-f89f6e6e6a38",
+              "Id": "156e3afb-71ac-359e-ad23-f89f6e6e6a38",
+              "Offset": 30,
+              "Name": "Text",
+              "Label": {
+                "en": "Text"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:2337da24-0d0f-486a-9bd1-92ad85e5397a"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:65745da6-7de9-486b-ad8f-7b1647e3e4fd"
               }
             }
           ],
@@ -1467,6 +1756,168 @@
             }
           ],
           "Queries": []
+        },
+        "2e716f31-059c-3b04-b4c8-0185604eab14": {
+          "$id": "PersistentObject:2e716f31-059c-3b04-b4c8-0185604eab14",
+          "SchemaName": "AlprApp",
+          "Type": "PersonCar",
+          "Salt": "tB3gMQ_y7LcCfgbgce-rS7CHymLKxjz5YCe8YoGpcJE",
+          "Breadcrumb": "{CarID}",
+          "ContextProperty": "PersonCars",
+          "Label": {
+            "en": "Person car"
+          },
+          "Groups": [
+            {
+              "$id": "PersistentObjectAttributeGroup:54421b19-85f4-4dd7-bf75-ed09471716f2",
+              "Id": "54421b19-85f4-4dd7-bf75-ed09471716f2"
+            }
+          ],
+          "Tabs": [
+            {
+              "$id": "PersistentObjectAttributeTab:bd6a5b11-6743-4e7b-bcba-cd6bb35c6d7c",
+              "Id": "bd6a5b11-6743-4e7b-bcba-cd6bb35c6d7c"
+            }
+          ],
+          "Attributes": [
+            {
+              "$id": "PersistentObjectAttributeWithReference:c6eeb5f5-d01e-32b9-bd8a-6486315f8a05",
+              "$type": "Vidyano.Service.Repository.PersistentObjectAttributeWithReference, Vidyano.Service",
+              "DisplayAttribute": "Company",
+              "LookupId": "541523ff-4e95-4fdc-9ddb-bbee820117f8",
+              "Id": "c6eeb5f5-d01e-32b9-bd8a-6486315f8a05",
+              "Offset": 20,
+              "Rules": "Required",
+              "Name": "Car",
+              "Label": {
+                "en": "Car"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:Reference"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:54421b19-85f4-4dd7-bf75-ed09471716f2"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:bd6a5b11-6743-4e7b-bcba-cd6bb35c6d7c"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:74af5d59-4087-3e8f-83e7-cec6023ab160",
+              "Id": "74af5d59-4087-3e8f-83e7-cec6023ab160",
+              "Offset": 40,
+              "Rules": "Required",
+              "Name": "EndDate",
+              "Label": {
+                "en": "End date"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:Date"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:54421b19-85f4-4dd7-bf75-ed09471716f2"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:bd6a5b11-6743-4e7b-bcba-cd6bb35c6d7c"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttributeWithReference:969c5234-b789-372f-9fcd-c2ea97374cd2",
+              "$type": "Vidyano.Service.Repository.PersistentObjectAttributeWithReference, Vidyano.Service",
+              "DisplayAttribute": "Email",
+              "LookupId": "26f175c1-d733-4d42-b3c1-c5e19a44ec9a",
+              "Id": "969c5234-b789-372f-9fcd-c2ea97374cd2",
+              "Offset": 10,
+              "Rules": "Required",
+              "Name": "Person",
+              "Label": {
+                "en": "Person"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:Reference"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:54421b19-85f4-4dd7-bf75-ed09471716f2"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:bd6a5b11-6743-4e7b-bcba-cd6bb35c6d7c"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:6c97d52d-1cc3-3cde-9bc5-e458fd68beae",
+              "Id": "6c97d52d-1cc3-3cde-9bc5-e458fd68beae",
+              "Offset": 30,
+              "Rules": "Required",
+              "Name": "StartDate",
+              "Label": {
+                "en": "Start date"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:Date"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:54421b19-85f4-4dd7-bf75-ed09471716f2"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:bd6a5b11-6743-4e7b-bcba-cd6bb35c6d7c"
+              }
+            }
+          ],
+          "Queries": []
+        },
+        "4fab5fef-d695-3177-9d24-534be232991f": {
+          "$id": "PersistentObject:4fab5fef-d695-3177-9d24-534be232991f",
+          "SchemaName": "AlprApp",
+          "Type": "PremadeMessage",
+          "Salt": "R5h7LviFKArqFcWg1PHjruDiyE8Iqwa6e4c79HX6h3g",
+          "Breadcrumb": "{Text}",
+          "ContextProperty": "PremadeMessages",
+          "Label": {
+            "en": "Premade message"
+          },
+          "Groups": [
+            {
+              "$id": "PersistentObjectAttributeGroup:91c649f1-1948-4e46-a090-2cf0983485d7",
+              "Id": "91c649f1-1948-4e46-a090-2cf0983485d7"
+            }
+          ],
+          "Tabs": [
+            {
+              "$id": "PersistentObjectAttributeTab:b2f2ec58-1bfa-4db6-82ae-022c93548e77",
+              "Id": "b2f2ec58-1bfa-4db6-82ae-022c93548e77"
+            }
+          ],
+          "Attributes": [
+            {
+              "$id": "PersistentObjectAttribute:97a9a651-9aaa-369a-9a3f-0651340cfd86",
+              "Id": "97a9a651-9aaa-369a-9a3f-0651340cfd86",
+              "Offset": 10,
+              "Name": "Text",
+              "Label": {
+                "en": "Text"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:MultiLineString"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:91c649f1-1948-4e46-a090-2cf0983485d7"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:b2f2ec58-1bfa-4db6-82ae-022c93548e77"
+              }
+            }
+          ],
+          "Queries": []
         }
       },
       "Queries": {
@@ -1480,6 +1931,71 @@
           },
           "PersistentObject": {
             "$ref": "PersistentObject:645a9601-cf0c-3160-974d-69ed5e6b5d70"
+          },
+          "Columns": []
+        },
+        "541523ff-4e95-4fdc-9ddb-bbee820117f8": {
+          "$id": "Query:541523ff-4e95-4fdc-9ddb-bbee820117f8",
+          "Source": "Database.Cars",
+          "AutoQuery": true,
+          "Name": "Cars",
+          "Label": {
+            "en": "Cars"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:8c48c59c-a8a5-3699-a536-c54afe24d725"
+          },
+          "Columns": []
+        },
+        "54fd1386-46ad-4122-9fca-d85d83419e6e": {
+          "$id": "Query:54fd1386-46ad-4122-9fca-d85d83419e6e",
+          "Source": "Database.PersonCars",
+          "AutoQuery": true,
+          "Name": "PersonCars",
+          "Label": {
+            "en": "Person cars"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:2e716f31-059c-3b04-b4c8-0185604eab14"
+          },
+          "Columns": []
+        },
+        "5eaadf44-b377-4b61-bb78-8cacb0ec75f2": {
+          "$id": "Query:5eaadf44-b377-4b61-bb78-8cacb0ec75f2",
+          "Source": "Database.PremadeMessages",
+          "AutoQuery": true,
+          "Name": "PremadeMessages",
+          "Label": {
+            "en": "Premade messages"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:4fab5fef-d695-3177-9d24-534be232991f"
+          },
+          "Columns": []
+        },
+        "66993f53-af3e-4d17-b907-acefc4b80463": {
+          "$id": "Query:66993f53-af3e-4d17-b907-acefc4b80463",
+          "Source": "Database.Companies",
+          "AutoQuery": true,
+          "Name": "Companies",
+          "Label": {
+            "en": "Companies"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:d267c5e6-ebf9-3d05-a0ba-4751dafebaf1"
+          },
+          "Columns": []
+        },
+        "da53d933-d4ab-4db4-8085-be6664699fce": {
+          "$id": "Query:da53d933-d4ab-4db4-8085-be6664699fce",
+          "Source": "Database.Messages",
+          "AutoQuery": true,
+          "Name": "Messages",
+          "Label": {
+            "en": "Messages"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:5abe028c-d61a-383f-9714-800db41816ba"
           },
           "Columns": []
         }
@@ -1498,6 +2014,6 @@
   ],
   "Reports": [],
   "ServiceVersion": "5.44.0+6e65421",
-  "ModelHash": "5c6HpzeVFzOtXs4eg0K06xlqcaZPNRszOfHkK+xEkZ8=",
+  "ModelHash": "3ZFayFdJAF8MBMP4ratZWP82c1jlgKVGUlQgj2KlKxU=",
   "SeederHash": "dNjUy9U/waF+QkKW/VqUqzBx6hSr96TA/komargs96Y="
 }

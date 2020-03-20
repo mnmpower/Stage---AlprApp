@@ -1,3 +1,5 @@
+using AlprApp.Models;
+using AlprApp.Service.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +15,30 @@ namespace AlprApp.Service
     {
         public override void OnNew(PersistentObject obj, PersistentObject parent, Query query, Dictionary<string, string> parameters)
         {
+
             base.OnNew(obj, parent, query, parameters);
-            Context.Database.ExecuteSqlCommand("Select * from dbo.Wagen");
+            
+
         }
+
+        public override void OnLoad(PersistentObject obj, PersistentObject parent)
+        {
+            base.OnLoad(obj, parent);
+
+            string messagesString = "";
+            List<PremadeMessage> messagesList = Context.PremadeMessages.ToList();
+
+            foreach (var premadeMessage in messagesList)
+            {
+                messagesString += premadeMessage.PremadeMessageID;
+                messagesString += ":";
+                messagesString += premadeMessage.Text;
+                messagesString += ";";
+
+            }
+
+            obj.SetAttributeValue("Messages", messagesString);
+        }
+
     }
 }

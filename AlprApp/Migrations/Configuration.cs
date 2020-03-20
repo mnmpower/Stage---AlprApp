@@ -48,7 +48,7 @@ namespace AlprApp.Migrations
 
             context.Cars.AddOrUpdate(
                 new Car { CarID=1, CompanyID=1, LicensePlate="1PXL907" },
-                new Car { CarID=2, CompanyID=2, LicensePlate="1H786P0J" }
+                new Car { CarID=2, CompanyID=2, LicensePlate="IH786P0J" }
             );
             context.SaveChanges();
 

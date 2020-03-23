@@ -2,6 +2,11 @@
   "Groups": {},
   "Rights": [
     {
+      "Id": "cf9509bf-9720-4b7f-845b-63d13902f785",
+      "Resource": "Delete/AlprApp.AlprData",
+      "UserId": "d3bd3312-0730-43d9-9bf4-9e14c75b00f7"
+    },
+    {
       "Id": "2a0a18ec-dde9-4f60-a94a-6f83d5baf299",
       "Resource": "Delete/AlprApp.TemplateData",
       "UserId": "d3bd3312-0730-43d9-9bf4-9e14c75b00f7"

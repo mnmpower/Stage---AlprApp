@@ -10,6 +10,18 @@ namespace AlprApp.WebComponents {
                 type: Array,
                 readOnly: true
             },
+            writeOwnMessage: {
+                type: Boolean,
+                readOnly: true
+            },
+            messageEmptyAfterSend: {
+                type: Boolean,
+                readOnly: true
+            },
+            plateEmptyAfterSend: {
+                type: Boolean,
+                readOnly: true
+            },
                 
             
         }
@@ -17,17 +29,27 @@ namespace AlprApp.WebComponents {
     export class AlprData extends Vidyano.WebComponents.WebComponent {
         readonly alprDataPo: Vidyano.PersistentObject;
         readonly messages: { id: number, text: string }[];
+        readonly writeOwnMessage: boolean;
+        readonly messageEmptyAfterSend: boolean;
+        readonly plateEmptyAfterSend: boolean;
 
         private _setAlprDataPo: (value: Vidyano.PersistentObject) => void;
-        private _setMessages: (value: Array<{ id: number, text: string } >) => void;
+        private _setMessages: (value: Array<{ id: number, text: string }>) => void;
+        private _setWriteOwnMessage: (value: boolean) => void;
+        private _setMessageEmptyAfterSend: (value: boolean) => void;
+        private _setPlateEmptyAfterSend: (value: boolean) => void;
 
         public input;
+        public selectedOption = 0;
 
 
 
         async attached() {
             super.attached();
             this._setAlprDataPo(await this.app.service.getPersistentObject(null, "AlprApp.AlprData", null));
+            this._setWriteOwnMessage(true);
+            this._setMessageEmptyAfterSend(false);
+            this._setPlateEmptyAfterSend(false);
 
             // ObjectArray declareren
             let messageArray: { id: number, text: string }[] = [];
@@ -91,14 +113,95 @@ namespace AlprApp.WebComponents {
             }
         }
 
-        private DoeIets(e: Event) {
-            alert("15");
+        private _sendForm(e: Event) {
+            // Hier iets doen als ze op verzenden klikken.
+            var optionOfMessage = ""
+
+            //chekcen of ze een voorgemaakte message hebben of niet
+            if (this.selectedOption == 0) {
+
+            //message ophalen en kijken of ze niet leeg is
+                var m = this.alprDataPo.getAttributeValue("Message");
+
+                if (m === "") {
+                    this._setMessageEmptyAfterSend(true);
+                    return;
+                } else {
+                    this._setMessageEmptyAfterSend(false);
+                    optionOfMessage = m;
+                }
+            } else {
+                optionOfMessage = "ID: " + this.selectedOption;
+            }
+
+
+            //Checken of een plaat gevonden is in een foto
+            var plate = this.alprDataPo.getAttributeValue("LicensePlate");
+            if (plate != null) {
+                if (plate === "null" || plate === "" || plate.length > 18) {
+                    this._setPlateEmptyAfterSend(true);
+                    return;
+                } else {
+                    this._setPlateEmptyAfterSend(false);
+                }
+            } else {
+                this._setPlateEmptyAfterSend(true);
+                return
+            }
+
+
+            //Indien een geldige message en geldige nummerplaat:
+            alert(plate + optionOfMessage);
+
+            
         }
 
-        private _WriteOwnMessage(str: String) {
-            debugger;
-            //Hier value checken van dropdown;
-            return false;
+        private _setValueDropdown() {
+            // Dropdown selecteren
+            var e = (document.getElementById("problemDropdown")) as HTMLSelectElement;
+            
+            // value opvragen van selected option
+            this.selectedOption = e.selectedIndex;
+            
+            // Boolean aanpassen om textarea te tonen
+            this._writeOwnMessage();
         }
+
+        private _writeOwnMessage() {
+            //Hier value checken van dropdown;
+            if (this.selectedOption === 0) {
+                this._setWriteOwnMessage(true);
+            } else {
+                this._setWriteOwnMessage(false);
+            }
+           
+        }
+
+        private _setMessage() {
+            this.alprDataPo.beginEdit();
+            var textarea = (document.getElementById("inputSelfWrittenMelding")) as HTMLSelectElement;
+            this.alprDataPo.setAttributeValue("Message", textarea.value);
+            
+            this._ValidateTextArea(textarea.value);
+        }
+
+        private _ValidateTextArea(value: string) {
+            if (value === "") {
+                this._setMessageEmptyAfterSend(true);
+                return;
+            } else {
+                this._setMessageEmptyAfterSend(false);
+            }
+        }
+
+        private _ValidatePlate(value: string) {
+            if (value === "" || value.length > 10) {
+                this._setPlateEmptyAfterSend(true);
+                return;
+            } else {
+                this._setPlateEmptyAfterSend(false);
+            }
+        }
+
     }
 }

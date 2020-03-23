@@ -6,7 +6,9 @@ var AlprApp;
         var AlprData = /** @class */ (function (_super) {
             __extends(AlprData, _super);
             function AlprData() {
-                return _super !== null && _super.apply(this, arguments) || this;
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.selectedOption = 0;
+                return _this;
             }
             AlprData.prototype.attached = function () {
                 return __awaiter(this, void 0, void 0, function () {
@@ -19,6 +21,9 @@ var AlprApp;
                                 return [4 /*yield*/, this.app.service.getPersistentObject(null, "AlprApp.AlprData", null)];
                             case 1:
                                 _a.apply(this, [_b.sent()]);
+                                this._setWriteOwnMessage(true);
+                                this._setMessageEmptyAfterSend(false);
+                                this._setPlateEmptyAfterSend(false);
                                 messageArray = [];
                                 messagesString = this.alprDataPo.getAttributeValue("Messages");
                                 messagesMetID = messagesString.split(';');
@@ -73,13 +78,83 @@ var AlprApp;
                     reader.readAsDataURL(this.input.files[0]);
                 }
             };
-            AlprData.prototype.DoeIets = function (e) {
-                alert("15");
+            AlprData.prototype._sendForm = function (e) {
+                // Hier iets doen als ze op verzenden klikken.
+                var optionOfMessage = "";
+                //chekcen of ze een voorgemaakte message hebben of niet
+                if (this.selectedOption == 0) {
+                    //message ophalen en kijken of ze niet leeg is
+                    var m = this.alprDataPo.getAttributeValue("Message");
+                    if (m === "") {
+                        this._setMessageEmptyAfterSend(true);
+                        return;
+                    }
+                    else {
+                        this._setMessageEmptyAfterSend(false);
+                        optionOfMessage = m;
+                    }
+                }
+                else {
+                    optionOfMessage = "ID: " + this.selectedOption;
+                }
+                //Checken of een plaat gevonden is in een foto
+                var plate = this.alprDataPo.getAttributeValue("LicensePlate");
+                if (plate != null) {
+                    if (plate === "null" || plate === "" || plate.length > 18) {
+                        this._setPlateEmptyAfterSend(true);
+                        return;
+                    }
+                    else {
+                        this._setPlateEmptyAfterSend(false);
+                    }
+                }
+                else {
+                    this._setPlateEmptyAfterSend(true);
+                    return;
+                }
+                //Indien een geldige message en geldige nummerplaat:
+                alert(plate + optionOfMessage);
             };
-            AlprData.prototype._WriteOwnMessage = function (str) {
-                debugger;
+            AlprData.prototype._setValueDropdown = function () {
+                // Dropdown selecteren
+                var e = (document.getElementById("problemDropdown"));
+                // value opvragen van selected option
+                this.selectedOption = e.selectedIndex;
+                // Boolean aanpassen om textarea te tonen
+                this._writeOwnMessage();
+            };
+            AlprData.prototype._writeOwnMessage = function () {
                 //Hier value checken van dropdown;
-                return false;
+                if (this.selectedOption === 0) {
+                    this._setWriteOwnMessage(true);
+                }
+                else {
+                    this._setWriteOwnMessage(false);
+                }
+            };
+            AlprData.prototype._setMessage = function () {
+                this.alprDataPo.beginEdit();
+                var textarea = (document.getElementById("inputSelfWrittenMelding"));
+                this.alprDataPo.setAttributeValue("Message", textarea.value);
+                this._ValidateTextArea(textarea.value);
+            };
+            AlprData.prototype._ValidateTextArea = function (value) {
+                if (value === "") {
+                    this._setMessageEmptyAfterSend(true);
+                    return;
+                }
+                else {
+                    this._setMessageEmptyAfterSend(false);
+                }
+            };
+            AlprData.prototype._ValidatePlate = function (value) {
+                if (value === "" || value.length > 10) {
+                    this._setPlateEmptyAfterSend(true);
+                    return;
+                }
+                else {
+                    this._setPlateEmptyAfterSend(false);
+                }
             };
             AlprData = __decorate([
                 Vidyano.WebComponents.WebComponent.register({
@@ -91,6 +166,18 @@ var AlprApp;
                         },
                         messages: {
                             type: Array,
+                            readOnly: true
+                        },
+                        writeOwnMessage: {
+                            type: Boolean,
+                            readOnly: true
+                        },
+                        messageEmptyAfterSend: {
+                            type: Boolean,
+                            readOnly: true
+                        },
+                        plateEmptyAfterSend: {
+                            type: Boolean,
                             readOnly: true
                         },
                     }

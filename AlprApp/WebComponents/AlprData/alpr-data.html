@@ -20,7 +20,7 @@
                         <!-- Dropdown Probleem -->
                         <!----------------------->
                         <label for="exampleFormControlSelect1">Selecteer een opmerking.</label>
-                        <select class="form-control" id="problemDropdown">
+                        <select class="form-control" id="problemDropdown" on-change="_setValueDropdown">
 
                             <option id="zelf" value="0">Ik schrijf zelf een melding...</option>
                             <template is="dom-repeat" items="{{messages}}" as="message">
@@ -35,24 +35,30 @@
                         <!---------------------->
                         <!-- TextArea Melding -->
                         <!---------------------->
-                        <textarea class="form-control mb-3" id="inputSelfWrittenMelding" rows="3" hidden$="[[_WriteOwnMessage('ddd')]]"></textarea>
+                            <template is="dom-if" if="[[writeOwnMessage]]">
+                                <textarea class="form-control mb-3" id="inputSelfWrittenMelding" value="{{alprDataPo.attributes.Message.value}}" on-change="_setMessage" placeholder="Typ hier uw eigen melding" ></textarea>
+                                
+                                <template is="dom-if" if="[[messageEmptyAfterSend]]">
+                                    <div class="text-danger mb-3">Vul een melding in!</div>
+                                </template>
+                            </template>
 
+                            <div class="row">
+                                <div class="col-6">
 
-                        <div class="row">
-                            <div class="col-6">
+                                    <!------------------->
+                                    <!-- IMAGE UPLOADS -->
+                                    <!------------------->
 
-                                <!------------------->
-                                <!-- IMAGE UPLOADS -->
-                                <!------------------->
-
-                                <input id="file" type="file" accept="image/*" capture="camera">
-                                <label for="fileUpload" class="custom-fileUpload vc-prepare childDiv">
-                                    <i class="material-icons md-18 mr-3 vertical-center">cloud_upload</i>Neem een foto
-                                </label>
-                                <input id="fileUpload" type="file" accept="image/*" capture="camera" on-change="_imageCaptured" />
+                                    <input id="file" type="file" accept="image/*" capture="camera">
+                                    <label for="fileUpload" class="custom-fileUpload vc-prepare childDiv">
+                                        <i class="material-icons md-18 mr-3 vertical-center">cloud_upload</i>Neem een foto
+                                    </label>
+                                    <input id="fileUpload" type="file" accept="image/*" capture="camera" on-change="_imageCaptured" />
+                                </div>
+                                <div id="image-holder" class="col-6"> </div>
+                                
                             </div>
-                            <div id="image-holder" class="col-6"> </div>
-                        </div>
                         <div id="b64"></div>
 
 
@@ -63,13 +69,15 @@
                         <div class="form-label-group mt-3">
                             <label class="text-center">Is de nummerplaat correct?</label>
                             <span id="licensePlate"></span>
-
+                            <template is="dom-if" if="[[plateEmptyAfterSend]]">
+                                <div class="text-danger mb-3">Trek een goede foto van een nummerplaat!</div>
+                            </template>
                         </div>
 
                         <!----------------->
                         <!-- Button next -->
                         <!----------------->
-                        <button id="send" class="btn btn-lg btn-warning btn-block mt-3 mb-3" on-tap="DoeIets">
+                        <button id="send" class="btn btn-lg btn-warning btn-block mt-3 mb-3" on-tap="_sendForm">
                             Verstuur
                         </button>
 

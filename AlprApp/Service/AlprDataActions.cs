@@ -38,6 +38,9 @@ namespace AlprApp.Service
             }
 
             obj.SetAttributeValue("Messages", messagesString);
+            obj.SetAttributeValue("Message", "");
+
+
         }
 
     }

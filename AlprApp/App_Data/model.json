@@ -1319,12 +1319,52 @@
           ],
           "Attributes": [
             {
+              "$id": "PersistentObjectAttribute:23f80d5a-ea20-351b-8237-2136eaf000bc",
+              "Id": "23f80d5a-ea20-351b-8237-2136eaf000bc",
+              "Offset": 60,
+              "Name": "Candidates",
+              "Label": {
+                "en": "Candidates"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:String"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:bc8df00c-0c24-48a3-b14e-4d841c7799de"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:310b1cb9-6995-47de-b1b0-80b77c6d5c5f"
+              }
+            },
+            {
               "$id": "PersistentObjectAttribute:ec174911-21d6-3ae2-9354-4d22522e4538",
               "Id": "ec174911-21d6-3ae2-9354-4d22522e4538",
               "Offset": 10,
               "Name": "ImageData",
               "Label": {
                 "en": "Image"
+              },
+              "Visibility": 7,
+              "ColumnSpan": 1,
+              "DataType": {
+                "$ref": "DataType:String"
+              },
+              "Group": {
+                "$ref": "PersistentObjectAttributeGroup:bc8df00c-0c24-48a3-b14e-4d841c7799de"
+              },
+              "Tab": {
+                "$ref": "PersistentObjectAttributeTab:310b1cb9-6995-47de-b1b0-80b77c6d5c5f"
+              }
+            },
+            {
+              "$id": "PersistentObjectAttribute:e10c04af-0b05-341e-9f99-d9339e3ac07c",
+              "Id": "e10c04af-0b05-341e-9f99-d9339e3ac07c",
+              "Offset": 70,
+              "Name": "InDB",
+              "Label": {
+                "en": "in DB"
               },
               "Visibility": 7,
               "ColumnSpan": 1,

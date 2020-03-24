@@ -78,7 +78,7 @@ namespace AlprApp.Service.CustomActions
             if (alprWithHeader == null || alprWithHeader.results.Length == 0)
             {
                 // Set value in LicensePlate from Persistant Object + Creating visable error for user
-                po.SetAttributeValue("LicensePlate", "Geen nummerplaat gevonden. Probeer opnieuw aub! \n");
+                po.SetAttributeValue("LicensePlate", "Geen plaat gevonden.\n Probeer opnieuw aub!");
                 
                 // Return answer
                 return po;
@@ -93,18 +93,43 @@ namespace AlprApp.Service.CustomActions
 
             if (plateInDB)
             {
-                //ADD SENDING THE MESSAGE AND POST IT IN DB ++ JUSTTEST PURPOSE
-                lisencePlate += " - IN DB";
+                //Save the DB info in attribute
+                po.SetAttributeValue("InDB", "IN DB");
+
             } else
             {
-                lisencePlate = lisencePlate.ToLower()+ " - NOT FOUND";
+                po.SetAttributeValue("InDB", "NOT IN DB");
             }
             // Set value in LicensePlate from Persistant Object
             po.SetAttributeValue("LicensePlate", lisencePlate);
 
+            // Saving other options for plate in var.
+            var canditdates = alprWithHeader.results[0].candidates;
+
+            //converting candidates to a string.
+            string candidatesString = createString(canditdates);
+
+            // Set value in Candidates from Persistant Object
+            po.SetAttributeValue("Candidates", candidatesString);
+
             // Return answer
             return po;
 
+        }
+
+        private string createString(PlateObject[] canditdates)
+        {
+            string r = "";
+
+            foreach (var item in canditdates)
+            {
+                r += item.plate + ";";
+            }
+            r = r.Remove(r.Length - 1);
+
+
+
+            return r;
         }
 
         private bool checkIfPlateIsInDatabaseAsync(string plate)

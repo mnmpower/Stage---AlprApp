@@ -10,6 +10,10 @@ namespace AlprApp.WebComponents {
                 type: Array,
                 readOnly: true
             },
+            candidates: {
+                type: Array,
+                readOnly: true
+            },
             writeOwnMessage: {
                 type: Boolean,
                 readOnly: true
@@ -22,6 +26,14 @@ namespace AlprApp.WebComponents {
                 type: Boolean,
                 readOnly: true
             },
+            trueAfterPictureUpload: {
+                type: Boolean,
+                readOnly: true
+            },
+            showCandidates: {
+                type: Boolean,
+                readOnly: true
+            },
                 
             
         }
@@ -29,15 +41,21 @@ namespace AlprApp.WebComponents {
     export class AlprData extends Vidyano.WebComponents.WebComponent {
         readonly alprDataPo: Vidyano.PersistentObject;
         readonly messages: { id: number, text: string }[];
+        readonly candidates: string[];
         readonly writeOwnMessage: boolean;
         readonly messageEmptyAfterSend: boolean;
         readonly plateEmptyAfterSend: boolean;
+        readonly trueAfterPictureUpload: boolean;
+        readonly showCandidates: boolean;
 
         private _setAlprDataPo: (value: Vidyano.PersistentObject) => void;
         private _setMessages: (value: Array<{ id: number, text: string }>) => void;
+        private _setCandidates: (value: Array<string>) => void;
         private _setWriteOwnMessage: (value: boolean) => void;
         private _setMessageEmptyAfterSend: (value: boolean) => void;
         private _setPlateEmptyAfterSend: (value: boolean) => void;
+        private _setTrueAfterPictureUpload: (value: boolean) => void;
+        private _setShowCandidates: (value: boolean) => void;
 
         public input;
         public selectedOption = 0;
@@ -47,6 +65,7 @@ namespace AlprApp.WebComponents {
         async attached() {
             super.attached();
             this._setAlprDataPo(await this.app.service.getPersistentObject(null, "AlprApp.AlprData", null));
+            this._setCandidates([]);
             this._setWriteOwnMessage(true);
             this._setMessageEmptyAfterSend(false);
             this._setPlateEmptyAfterSend(false);
@@ -76,6 +95,7 @@ namespace AlprApp.WebComponents {
         }
 
         private _imageCaptured(e: Event) {
+            this._setTrueAfterPictureUpload(true);
             this.input = e.target as HTMLInputElement;
 
             if (this.input.files && this.input.files[0]) {
@@ -104,7 +124,29 @@ namespace AlprApp.WebComponents {
                         await tempThis.alprDataPo.setAttributeValue("ImageData", src);
                         var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
                         tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
+                        tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
+
+
+                        var plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
+                        if (plate != null) {
+                            if (plate === "null" || plate === "" || plate.length > 18) {
+                                tempThis._setPlateEmptyAfterSend(true);
+                                tempThis._setShowCandidates(false)
+                                return;
+                            } else {
+                                tempThis._setPlateEmptyAfterSend(false);
+                            }
+                        } else {
+                            tempThis._setPlateEmptyAfterSend(true);
+                            tempThis._setShowCandidates(false)
+                            return
+                        }
                         
+                        tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
+                        var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
+                        var candidates = candidatesString.split(';');
+                        tempThis._setCandidates(candidates);
+                        tempThis._setShowCandidates(true)
 
                     },
                     false
@@ -116,8 +158,11 @@ namespace AlprApp.WebComponents {
         private _sendForm(e: Event) {
             // Hier iets doen als ze op verzenden klikken.
             var optionOfMessage = ""
+
             //chekcen of ze een voorgemaakte message hebben of niet
             if (this.selectedOption == 0) {
+
+            //message ophalen en kijken of ze niet leeg is
                 var m = this.alprDataPo.getAttributeValue("Message");
 
                 if (m === "") {
@@ -131,19 +176,23 @@ namespace AlprApp.WebComponents {
                 optionOfMessage = "ID: " + this.selectedOption;
             }
 
+
+            //Checken of een plaat gevonden is in een foto
             var plate = this.alprDataPo.getAttributeValue("LicensePlate");
             if (plate != null) {
-                if (plate === "null" || plate === "" || plate.length > 10) {
+                if (plate === "null" || plate === "" || plate.length > 18) {
                     this._setPlateEmptyAfterSend(true);
                     return;
                 } else {
                     this._setPlateEmptyAfterSend(false);
                 }
             } else {
+                this._setPlateEmptyAfterSend(true);
                 return
             }
 
 
+            //Indien een geldige message en geldige nummerplaat:
             alert(plate + optionOfMessage);
 
             
@@ -194,6 +243,12 @@ namespace AlprApp.WebComponents {
             } else {
                 this._setPlateEmptyAfterSend(false);
             }
+        }
+
+        private _setPlate(event) {
+            const item = event.target.dataset.item;
+            this.alprDataPo.setAttributeValue("LicensePlate", item);
+            this.$$("#licensePlate").innerText = item;
         }
 
     }

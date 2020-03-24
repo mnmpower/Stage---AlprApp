@@ -35,3 +35,6 @@
 
 :host .fullWidth {
   width: 100vw; }
+
+:host .badge {
+  font-size: 25px; }

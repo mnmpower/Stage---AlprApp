@@ -21,6 +21,7 @@ var AlprApp;
                                 return [4 /*yield*/, this.app.service.getPersistentObject(null, "AlprApp.AlprData", null)];
                             case 1:
                                 _a.apply(this, [_b.sent()]);
+                                this._setCandidates([]);
                                 this._setWriteOwnMessage(true);
                                 this._setMessageEmptyAfterSend(false);
                                 this._setPlateEmptyAfterSend(false);
@@ -45,6 +46,7 @@ var AlprApp;
                 });
             };
             AlprData.prototype._imageCaptured = function (e) {
+                this._setTrueAfterPictureUpload(true);
                 this.input = e.target;
                 if (this.input.files && this.input.files[0]) {
                     var reader = new FileReader();
@@ -52,7 +54,7 @@ var AlprApp;
                     var tempThis = this;
                     reader.addEventListener("load", function () {
                         return __awaiter(this, void 0, void 0, function () {
-                            var img, imageHolder, src, returnedPO;
+                            var img, imageHolder, src, returnedPO, plate, candidatesString, candidates;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
@@ -70,6 +72,28 @@ var AlprApp;
                                     case 2:
                                         returnedPO = _a.sent();
                                         tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate");
+                                        tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
+                                        plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
+                                        if (plate != null) {
+                                            if (plate === "null" || plate === "" || plate.length > 18) {
+                                                tempThis._setPlateEmptyAfterSend(true);
+                                                tempThis._setShowCandidates(false);
+                                                return [2 /*return*/];
+                                            }
+                                            else {
+                                                tempThis._setPlateEmptyAfterSend(false);
+                                            }
+                                        }
+                                        else {
+                                            tempThis._setPlateEmptyAfterSend(true);
+                                            tempThis._setShowCandidates(false);
+                                            return [2 /*return*/];
+                                        }
+                                        tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
+                                        candidatesString = returnedPO.getAttributeValue("Candidates");
+                                        candidates = candidatesString.split(';');
+                                        tempThis._setCandidates(candidates);
+                                        tempThis._setShowCandidates(true);
                                         return [2 /*return*/];
                                 }
                             });
@@ -83,6 +107,7 @@ var AlprApp;
                 var optionOfMessage = "";
                 //chekcen of ze een voorgemaakte message hebben of niet
                 if (this.selectedOption == 0) {
+                    //message ophalen en kijken of ze niet leeg is
                     var m = this.alprDataPo.getAttributeValue("Message");
                     if (m === "") {
                         this._setMessageEmptyAfterSend(true);
@@ -96,9 +121,10 @@ var AlprApp;
                 else {
                     optionOfMessage = "ID: " + this.selectedOption;
                 }
+                //Checken of een plaat gevonden is in een foto
                 var plate = this.alprDataPo.getAttributeValue("LicensePlate");
                 if (plate != null) {
-                    if (plate === "null" || plate === "" || plate.length > 10) {
+                    if (plate === "null" || plate === "" || plate.length > 18) {
                         this._setPlateEmptyAfterSend(true);
                         return;
                     }
@@ -107,8 +133,10 @@ var AlprApp;
                     }
                 }
                 else {
+                    this._setPlateEmptyAfterSend(true);
                     return;
                 }
+                //Indien een geldige message en geldige nummerplaat:
                 alert(plate + optionOfMessage);
             };
             AlprData.prototype._setValueDropdown = function () {
@@ -152,6 +180,11 @@ var AlprApp;
                     this._setPlateEmptyAfterSend(false);
                 }
             };
+            AlprData.prototype._setPlate = function (event) {
+                var item = event.target.dataset.item;
+                this.alprDataPo.setAttributeValue("LicensePlate", item);
+                this.$$("#licensePlate").innerText = item;
+            };
             AlprData = __decorate([
                 Vidyano.WebComponents.WebComponent.register({
                     properties: {
@@ -164,6 +197,10 @@ var AlprApp;
                             type: Array,
                             readOnly: true
                         },
+                        candidates: {
+                            type: Array,
+                            readOnly: true
+                        },
                         writeOwnMessage: {
                             type: Boolean,
                             readOnly: true
@@ -173,6 +210,14 @@ var AlprApp;
                             readOnly: true
                         },
                         plateEmptyAfterSend: {
+                            type: Boolean,
+                            readOnly: true
+                        },
+                        trueAfterPictureUpload: {
+                            type: Boolean,
+                            readOnly: true
+                        },
+                        showCandidates: {
                             type: Boolean,
                             readOnly: true
                         },

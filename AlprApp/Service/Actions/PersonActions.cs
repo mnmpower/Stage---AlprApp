@@ -14,6 +14,8 @@ namespace AlprApp.Service.Actions
         public string FristName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        
+        public virtual ICollection<PersonCar> PersonCar { get; set; }
 
         public class PersonActions : PersistentObjectActionsReference<AlprAppEntityModelContainer, Person>
         {

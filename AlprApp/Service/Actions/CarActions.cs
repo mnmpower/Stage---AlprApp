@@ -16,8 +16,10 @@ namespace AlprApp.Service.Actions
 
         [ForeignKey("CompanyID")]
         public virtual Company Company { get; set; }
+        
+        public virtual ICollection<PersonCar> PersonCars { get; set; }
 
-       
+
         public class CarActions : PersistentObjectActionsReference<AlprAppEntityModelContainer, Car>
         {
 

@@ -155,9 +155,11 @@ namespace AlprApp.WebComponents {
             }
         }
 
-        private _sendForm(e: Event) {
+        private async _sendForm(e: Event) {
             // Hier iets doen als ze op verzenden klikken.
             var optionOfMessage = ""
+            var textarea = (document.getElementById("inputSelfWrittenMelding")) as HTMLSelectElement;
+            var dropdown = (document.getElementById("problemDropdown")) as HTMLSelectElement;
 
             //chekcen of ze een voorgemaakte message hebben of niet
             if (this.selectedOption == 0) {
@@ -166,14 +168,24 @@ namespace AlprApp.WebComponents {
                 var m = this.alprDataPo.getAttributeValue("Message");
 
                 if (m === "") {
+                    //foutmelding tonen lege melding
                     this._setMessageEmptyAfterSend(true);
                     return;
                 } else {
+                    //foutmelding verbergen van lege melding
                     this._setMessageEmptyAfterSend(false);
-                    optionOfMessage = m;
+
+                    //message zetten op PO
+                    this.alprDataPo.setAttributeValue("Message", textarea.value);
+                    optionOfMessage = textarea.value;
                 }
             } else {
-                optionOfMessage = "ID: " + this.selectedOption;
+                 //Value ophalen van de dropdownbox (is de voorgemaakteMessageID)
+                var premadeMessageId = dropdown.options[this.selectedOption].value;
+                optionOfMessage = premadeMessageId;
+                
+                //message zetten op PO
+                this.alprDataPo.setAttributeValue("Message", premadeMessageId);
             }
 
 
@@ -190,10 +202,10 @@ namespace AlprApp.WebComponents {
                 this._setPlateEmptyAfterSend(true);
                 return
             }
-
-
+            
             //Indien een geldige message en geldige nummerplaat:
-            alert(plate + optionOfMessage);
+            alert(plate + " - " + optionOfMessage);
+            await this.alprDataPo.getAction("SendMessage").execute();
 
             
         }
@@ -201,10 +213,10 @@ namespace AlprApp.WebComponents {
         private _setValueDropdown() {
             // Dropdown selecteren
             var e = (document.getElementById("problemDropdown")) as HTMLSelectElement;
-            
+
             // value opvragen van selected option
             this.selectedOption = e.selectedIndex;
-            
+
             // Boolean aanpassen om textarea te tonen
             this._writeOwnMessage();
         }

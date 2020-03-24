@@ -21,6 +21,8 @@ namespace AlprApp.Service.Actions
 
         [ForeignKey("CarID")]
         public virtual Car Car { get; set; }
+        
+        public virtual ICollection<Message> Messages { get; set; }
 
 
         public class PersonCarActions : PersistentObjectActionsReference<AlprAppEntityModelContainer, PersonCar>

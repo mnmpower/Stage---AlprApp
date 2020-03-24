@@ -103,41 +103,59 @@ var AlprApp;
                 }
             };
             AlprData.prototype._sendForm = function (e) {
-                // Hier iets doen als ze op verzenden klikken.
-                var optionOfMessage = "";
-                //chekcen of ze een voorgemaakte message hebben of niet
-                if (this.selectedOption == 0) {
-                    //message ophalen en kijken of ze niet leeg is
-                    var m = this.alprDataPo.getAttributeValue("Message");
-                    if (m === "") {
-                        this._setMessageEmptyAfterSend(true);
-                        return;
-                    }
-                    else {
-                        this._setMessageEmptyAfterSend(false);
-                        optionOfMessage = m;
-                    }
-                }
-                else {
-                    optionOfMessage = "ID: " + this.selectedOption;
-                }
-                //Checken of een plaat gevonden is in een foto
-                var plate = this.alprDataPo.getAttributeValue("LicensePlate");
-                if (plate != null) {
-                    if (plate === "null" || plate === "" || plate.length > 18) {
-                        this._setPlateEmptyAfterSend(true);
-                        return;
-                    }
-                    else {
-                        this._setPlateEmptyAfterSend(false);
-                    }
-                }
-                else {
-                    this._setPlateEmptyAfterSend(true);
-                    return;
-                }
-                //Indien een geldige message en geldige nummerplaat:
-                alert(plate + optionOfMessage);
+                return __awaiter(this, void 0, void 0, function () {
+                    var optionOfMessage, textarea, dropdown, m, premadeMessageId, plate;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                optionOfMessage = "";
+                                textarea = (document.getElementById("inputSelfWrittenMelding"));
+                                dropdown = (document.getElementById("problemDropdown"));
+                                //chekcen of ze een voorgemaakte message hebben of niet
+                                if (this.selectedOption == 0) {
+                                    m = this.alprDataPo.getAttributeValue("Message");
+                                    if (m === "") {
+                                        //foutmelding tonen lege melding
+                                        this._setMessageEmptyAfterSend(true);
+                                        return [2 /*return*/];
+                                    }
+                                    else {
+                                        //foutmelding verbergen van lege melding
+                                        this._setMessageEmptyAfterSend(false);
+                                        //message zetten op PO
+                                        this.alprDataPo.setAttributeValue("Message", textarea.value);
+                                        optionOfMessage = textarea.value;
+                                    }
+                                }
+                                else {
+                                    premadeMessageId = dropdown.options[this.selectedOption].value;
+                                    optionOfMessage = premadeMessageId;
+                                    //message zetten op PO
+                                    this.alprDataPo.setAttributeValue("Message", premadeMessageId);
+                                }
+                                plate = this.alprDataPo.getAttributeValue("LicensePlate");
+                                if (plate != null) {
+                                    if (plate === "null" || plate === "" || plate.length > 18) {
+                                        this._setPlateEmptyAfterSend(true);
+                                        return [2 /*return*/];
+                                    }
+                                    else {
+                                        this._setPlateEmptyAfterSend(false);
+                                    }
+                                }
+                                else {
+                                    this._setPlateEmptyAfterSend(true);
+                                    return [2 /*return*/];
+                                }
+                                //Indien een geldige message en geldige nummerplaat:
+                                alert(plate + " - " + optionOfMessage);
+                                return [4 /*yield*/, this.alprDataPo.getAction("SendMessage").execute()];
+                            case 1:
+                                _a.sent();
+                                return [2 /*return*/];
+                        }
+                    });
+                });
             };
             AlprData.prototype._setValueDropdown = function () {
                 // Dropdown selecteren

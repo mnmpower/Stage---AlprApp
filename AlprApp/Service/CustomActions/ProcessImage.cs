@@ -4,13 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Vidyano.Service.Repository;
-using System.Data.SqlClient;
-using System.Data.OleDb;
-using System.Data;
 using AlprApp.Models;
 using System.Linq;
 using AlprApp.Service.Actions;
-using System.Data.Entity;
 
 namespace AlprApp.Service.CustomActions
 {

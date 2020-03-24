@@ -31,7 +31,7 @@ namespace AlprApp.Service
             modelBuilder.Entity<Company>().ToTable("Company");
             modelBuilder.Entity<PremadeMessage>().ToTable("PremadeMessage");
             modelBuilder.Entity<Car>().ToTable("Car");
-            modelBuilder.Entity<PersonCar>().ToTable("ComPersonCarpany");
+            modelBuilder.Entity<PersonCar>().ToTable("PersonCar");
             modelBuilder.Entity<Message>().ToTable("Message");
         }
     }

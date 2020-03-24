@@ -133,6 +133,10 @@
     <Compile Include="Migrations\202003201021578_Renaming-Tabels.Designer.cs">
       <DependentUpon>202003201021578_Renaming-Tabels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003241505076_Rename-Tabele-PersonCar.cs" />
+    <Compile Include="Migrations\202003241505076_Rename-Tabele-PersonCar.Designer.cs">
+      <DependentUpon>202003241505076_Rename-Tabele-PersonCar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AlprData.cs" />
     <Compile Include="Models\AlprReturn.cs" />
@@ -156,6 +160,7 @@
     <Compile Include="Service\AlprAppWeb.cs" />
     <Compile Include="Service\AlprDataActions.cs" />
     <Compile Include="Service\CustomActions\ProcessImage.cs" />
+    <Compile Include="Service\CustomActions\SendMessage.cs" />
     <Compile Include="Service\PersistentObjectActionsReference.cs" />
     <Compile Include="Service\TemplateDataActions.cs" />
     <Content Include="App_Data\Websites\Admin\index.html" />
@@ -240,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003201021578_Renaming-Tabels.resx">
       <DependentUpon>202003201021578_Renaming-Tabels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003241505076_Rename-Tabele-PersonCar.resx">
+      <DependentUpon>202003241505076_Rename-Tabele-PersonCar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

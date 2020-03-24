@@ -45,6 +45,11 @@
       "Id": "3bb5ffec-1d02-45b4-be04-ad37bb831b81",
       "Resource": "Read/AlprApp.TemplateData",
       "UserId": "d3bd3312-0730-43d9-9bf4-9e14c75b00f7"
+    },
+    {
+      "Id": "ed98a890-44fb-41c1-bb75-a25e818a495d",
+      "Resource": "SendMessage/AlprApp.AlprData",
+      "UserId": "d3bd3312-0730-43d9-9bf4-9e14c75b00f7"
     }
   ]
 }

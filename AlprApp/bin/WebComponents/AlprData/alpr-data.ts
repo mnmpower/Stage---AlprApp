@@ -207,6 +207,9 @@ namespace AlprApp.WebComponents {
             alert(plate + " - " + optionOfMessage);
             await this.alprDataPo.getAction("SendMessage").execute();
 
+            //redirecten
+            debugger;
+            window.location.href = 'localhost:50000/admin';
             
         }
 

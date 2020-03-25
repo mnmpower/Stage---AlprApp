@@ -152,6 +152,9 @@ var AlprApp;
                                 return [4 /*yield*/, this.alprDataPo.getAction("SendMessage").execute()];
                             case 1:
                                 _a.sent();
+                                //redirecten
+                                debugger;
+                                window.location.href = 'localhost:50000/admin';
                                 return [2 /*return*/];
                         }
                     });

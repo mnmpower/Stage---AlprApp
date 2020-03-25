@@ -164,6 +164,7 @@
     <Compile Include="Service\PersistentObjectActionsReference.cs" />
     <Compile Include="Service\TemplateDataActions.cs" />
     <Content Include="App_Data\Websites\Admin\index.html" />
+    <Content Include="App_Data\Websites\Confirmation\index.html" />
     <Content Include="App_Data\Websites\Default\index.html" />
     <Content Include="favicon.ico" />
     <None Include="compilerconfig.json" />

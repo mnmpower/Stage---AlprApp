@@ -153,8 +153,7 @@ var AlprApp;
                             case 1:
                                 _a.sent();
                                 //redirecten
-                                debugger;
-                                window.location.href = 'localhost:50000/admin';
+                                window.location.replace("/Confirmation");
                                 return [2 /*return*/];
                         }
                     });

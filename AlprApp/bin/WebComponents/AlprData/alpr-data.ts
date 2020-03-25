@@ -208,9 +208,7 @@ namespace AlprApp.WebComponents {
             await this.alprDataPo.getAction("SendMessage").execute();
 
             //redirecten
-            debugger;
-            window.location.href = 'localhost:50000/admin';
-            
+            window.location.replace("/Confirmation");
         }
 
         private _setValueDropdown() {

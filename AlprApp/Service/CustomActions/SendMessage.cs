@@ -1,18 +1,11 @@
-using Newtonsoft.Json;
 using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using Vidyano.Service.Repository;
-using AlprApp.Models;
 using System.Linq;
 using AlprApp.Service.Actions;
 using System.Data.Entity;
 using System.Net.Mail;
 using System.Net;
-using System.Security;
-using System.Diagnostics;
-using System.Web;
+using System.Net.Http;
 
 namespace AlprApp.Service.CustomActions
 {
@@ -118,8 +111,9 @@ namespace AlprApp.Service.CustomActions
                 }
             }
             //niets returnen;
+
             return null;
+            
         }
     }
-
 }

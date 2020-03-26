@@ -167,6 +167,14 @@
     <Content Include="App_Data\Websites\Confirmation\index.html" />
     <Content Include="App_Data\Websites\Default\index.html" />
     <Content Include="favicon.ico" />
+    <None Include="Resources\send_mail.png" />
+    <Content Include="WebComponents\Confirmation\confirmation.css">
+      <DependentUpon>confirmation.scss</DependentUpon>
+    </Content>
+    <Content Include="WebComponents\Confirmation\confirmation.html" />
+    <Content Include="WebComponents\Confirmation\confirmation.js">
+      <DependentUpon>confirmation.ts</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -215,12 +223,17 @@
       <DependentUpon>alpr-data.css</DependentUpon>
     </Content>
     <Content Include="WebComponents\AlprData\alpr-data.scss" />
+    <Content Include="WebComponents\Confirmation\confirmation.min.css">
+      <DependentUpon>confirmation.css</DependentUpon>
+    </Content>
+    <Content Include="WebComponents\Confirmation\confirmation.scss" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\typings\vidyano\vidyano.d.ts" />
     <TypeScriptCompile Include="WebComponents\AlprData\alpr-data.ts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="WebComponents\Confirmation\confirmation.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

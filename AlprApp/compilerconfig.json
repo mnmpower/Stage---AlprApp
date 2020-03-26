@@ -6,5 +6,9 @@
   {
     "outputFile": "WebComponents/AlprData/alpr-data.es5.js",
     "inputFile": "WebComponents/AlprData/alpr-data.js"
+  },
+  {
+    "outputFile": "WebComponents/Confirmation/confirmation.css",
+    "inputFile": "WebComponents/Confirmation/confirmation.scss"
   }
 ]

@@ -16,6 +16,7 @@
   "compileOnSave": true,
   "files": [
     "Scripts/typings/vidyano/vidyano.d.ts",
-    "WebComponents/AlprData/alpr-data.ts"
+    "WebComponents/AlprData/alpr-data.ts",
+    "WebComponents/Confirmation/confirmation.ts"
   ]
 }

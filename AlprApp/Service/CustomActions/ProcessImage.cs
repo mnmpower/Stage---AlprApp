@@ -64,7 +64,7 @@ namespace AlprApp.Service.CustomActions
             catch (Exception ex)
             {
                 // Set value in LicensePlate from Persistant Object + Creating visable error for user
-                po.SetAttributeValue("LicensePlate", "Er ging iets mis. Probeer opnieuw! \n" + ex.Message);
+                po.SetAttributeValue("LicensePlate", "Er ging iets mis.\nProbeer opnieuw!\nAPI  niet gevonden.");
 
                 // Return answer
                 return po;

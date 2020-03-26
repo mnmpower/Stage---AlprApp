@@ -48,7 +48,7 @@ namespace AlprApp.Migrations
 
             context.Cars.AddOrUpdate(
                 new Car { CarID=1, CompanyID=1, LicensePlate="1PXL907" },
-                new Car { CarID=2, CompanyID=2, LicensePlate="IH786P0J" }
+                new Car { CarID=2, CompanyID=2, LicensePlate="H786P0J" }
             );
             context.SaveChanges();
 
@@ -61,7 +61,7 @@ namespace AlprApp.Migrations
             context.Messages.AddOrUpdate(
                 new Message { MessageID=1, PersonCarID=1, PremadeMessageID=3 },
                 new Message { MessageID=2, PersonCarID=2, Text="Ik ben tegen je wagen gereden. Bel op op 0000/00.00.00"},
-                new Message { MessageID=3, PersonCarID=1, Text="misbruik bericht"}
+                new Message { MessageID=3, PersonCarID=1, Text="Misbruik bericht"}
             );
             context.SaveChanges();
         }

@@ -40,6 +40,10 @@ var AlprApp;
                                 }
                                 // Array zetten als property
                                 this._setMessages(messageArray);
+                                //opwarmen van de API
+                                this.alprDataPo.beginEdit();
+                                this.alprDataPo.setAttributeValue("ImageData", "1,1");
+                                this.alprDataPo.getAction("ProcessImage").execute();
                                 return [2 /*return*/];
                         }
                     });

@@ -92,6 +92,11 @@ namespace AlprApp.WebComponents {
 
             // Array zetten als property
             this._setMessages(messageArray);
+
+            //opwarmen van de API
+            this.alprDataPo.beginEdit();
+            this.alprDataPo.setAttributeValue("ImageData", "1,1");
+            this.alprDataPo.getAction("ProcessImage").execute();
         }
 
         private _imageCaptured(e: Event) {

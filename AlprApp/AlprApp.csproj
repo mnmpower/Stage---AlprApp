@@ -187,7 +187,9 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <None Include="Resources\Rhea nv.png" />
+    <None Include="Resources\Rhea nv.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\1PXL907.jpg" />
     <None Include="Resources\BATMAN1.jfif" />
     <None Include="Resources\H786POJ.jpg" />

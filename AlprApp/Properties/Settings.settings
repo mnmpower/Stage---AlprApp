@@ -17,5 +17,8 @@
     <Setting Name="EmailSubject" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Probleem bedrijfswagen - ParkingApp- Rhea N.V.</Value>
     </Setting>
+    <Setting Name="EmailBody" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;html&gt;&lt;h3&gt;Geachte {0} {1}&lt;/h3&gt;&lt;p&gt;Er is op &lt;b&gt;{2}&lt;/b&gt; om &lt;b&gt;{3}&lt;/b&gt; een melding gemaakt van een mogelijks probleem met uw bedrijfswagen.&lt;br/&gt;De persoon in kwestie verstuurde een {4} melding, namelijk:&lt;/p&gt;&lt;p&gt;&lt;i&gt;{5}&lt;/i&gt;&lt;/p&gt;&lt;p&gt;Met vriendelijke groeten&lt;br /&gt;Het IT-team van Rhea N.V.&lt;/p&gt;&lt;br /&gt;&lt;img src="{6}" width="72" height="72"&gt;&lt;/html&gt;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -67,5 +67,14 @@ namespace AlprApp.Properties {
                 return ((string)(this["EmailSubject"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<html><h3>Geachte {0} {1}</h3><p>Er is op <b>{2}</b> om <b>{3}</b> een melding gemaakt van een mogelijks probleem met uw bedrijfswagen.<br/>De persoon in kwestie verstuurde een {4} melding, namelijk:</p><p><i>{5}</i></p><p>Met vriendelijke groeten<br />Het IT-team van Rhea N.V.</p><br /><img src=""{6}"" width=""72"" height=""72""></html>")]
+        public string EmailBody {
+            get {
+                return ((string)(this["EmailBody"]));
+            }
+        }
     }
 }

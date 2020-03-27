@@ -219,7 +219,7 @@ namespace AlprApp.WebComponents {
         private _setValueDropdown() {
             // Dropdown selecteren
             var e = (document.getElementById("problemDropdown")) as HTMLSelectElement;
-
+            
             // value opvragen van selected option
             this.selectedOption = e.selectedIndex;
 

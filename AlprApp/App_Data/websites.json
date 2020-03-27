@@ -15,13 +15,6 @@
         "*"
       ],
       "DefaultUser": "e47e0a4f-916e-4f08-b438-7592a86278c4"
-    },
-    "Confirmation": {
-      "Type": 2,
-      "Bindings": [
-        "*/Confirmation"
-      ],
-      "DefaultUser": "e47e0a4f-916e-4f08-b438-7592a86278c4"
     }
   }
 }

@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Net.Mail;
 using System.Net;
 using System.Net.Http;
+using AlprApp.Properties;
 
 namespace AlprApp.Service.CustomActions
 {
@@ -29,13 +30,19 @@ namespace AlprApp.Service.CustomActions
 
                 //Message aanmaken + opvullen van persoonCarID
                 Message message = new Message();
-                Car car = (Car) Context.Cars.Where(c => c.LicensePlate == plate).Include(c => c.PersonCars).FirstOrDefault();
-                
-                message.MessageID = 0;
-                try
+
+                //car ophalen met de doorgegeven numerplaat
+                Car car = (Car)Context.Cars.Where(c => c.LicensePlate == plate).Include(c => c.PersonCars).First();
+
+                //persooncar ophalen indien die bestaat met een contract momenteel
+                var pc = car.PersonCars.Where(p => p.StartDate < DateTime.Now && DateTime.Now < p.EndDate).FirstOrDefault();
+
+                // indien null, return, anders dorgaan
+                if (pc != null)
                 {
-                    //nakijken of er een auto met deze plaat NU een bedrijfswagen is van iemand.
-                    message.PersonCarID = car.PersonCars.Where( p => p.StartDate < DateTime.Now && DateTime.Now < p.EndDate).FirstOrDefault().PersonCarID;
+                    message.MessageID = 0;
+                    message.PersonCarID = pc.PersonCarID;
+
 
                     // ophalen van PersoonCar om email uit te halen van de jusite persoon
                     var personCar = Context.PersonCars.Where(p => p.PersonCarID == message.PersonCarID).Include(p => p.Person).FirstOrDefault();
@@ -72,19 +79,19 @@ namespace AlprApp.Service.CustomActions
                     Context.SaveChangesAsync();
 
                     // SMTP configuratie
-                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                    SmtpClient client = new SmtpClient(Settings.Default.smtpClient, Settings.Default.smtpPort);
                     client.UseDefaultCredentials = false;
-                    client.Credentials = new NetworkCredential("rhean.v.norepley@gmail.com", "R1234-56");
+                    client.Credentials = new NetworkCredential(Settings.Default.smtpEmail, Settings.Default.smtpPwd);
                     client.EnableSsl = true;
 
                     //mail voorbereidingen
                     string emailTo = employee.Email;
-                    string subject = "Probleem bedrijfswagen - ParkingApp- Rhea N.V.";
+                    string subject = Settings.Default.EmailSubject;
                     string body = "" +
                         "Geachte " + employee.FristName + " " + employee.LastName +
                         "\n" +
-                        "\nEr is op " + DateTime.Now.ToString("dd/MM/yyyy") + " om " + DateTime.Now.ToString("HH:mm")+ " een melding gemaakt van een mogelijks probleem met uw bedrijfswagen."+
-                        "\nDe persoon in kwestie verstuurde een  " + PremadeOrSelfWritten + " melding, namelijk:"+
+                        "\nEr is op " + DateTime.Now.ToString("dd/MM/yyyy") + " om " + DateTime.Now.ToString("HH:mm") + " een melding gemaakt van een mogelijks probleem met uw bedrijfswagen." +
+                        "\nDe persoon in kwestie verstuurde een  " + PremadeOrSelfWritten + " melding, namelijk:" +
                         "\n" +
                         "\n" + messageInMail +
                         "\n" +
@@ -94,7 +101,7 @@ namespace AlprApp.Service.CustomActions
 
                     //mail Configuratie
                     MailMessage mailMessage = new MailMessage();
-                    mailMessage.From = new MailAddress("rhean.v.norepley@gmail.com");
+                    mailMessage.From = new MailAddress(Settings.Default.smtpEmail);
                     mailMessage.To.Add(emailTo);
                     mailMessage.Body = body;
                     mailMessage.Subject = subject;
@@ -103,15 +110,9 @@ namespace AlprApp.Service.CustomActions
                     client.Send(mailMessage);
                     //--------------------------------
                 }
-                catch (Exception)
-                {
-                    //Geen wagen gevonden die nu van iemand is
-                    //niets returnen;
-                    return null;
-                }
             }
-            //niets returnen;
 
+            //niets returnen;
             return null;
             
         }

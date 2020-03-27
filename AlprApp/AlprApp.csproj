@@ -148,6 +148,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Service\Actions\CarActions.cs" />
     <Compile Include="Service\Actions\CompanyActions.cs" />
     <Compile Include="Service\Actions\MessageActions.cs" />
@@ -164,9 +169,12 @@
     <Compile Include="Service\PersistentObjectActionsReference.cs" />
     <Compile Include="Service\TemplateDataActions.cs" />
     <Content Include="App_Data\Websites\Admin\index.html" />
-    <Content Include="App_Data\Websites\Confirmation\index.html" />
     <Content Include="App_Data\Websites\Default\index.html" />
     <Content Include="favicon.ico" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Resources\send_mail.png" />
     <Content Include="WebComponents\Confirmation\confirmation.css">
       <DependentUpon>confirmation.scss</DependentUpon>

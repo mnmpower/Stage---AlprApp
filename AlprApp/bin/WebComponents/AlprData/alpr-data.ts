@@ -94,9 +94,9 @@ namespace AlprApp.WebComponents {
             this._setMessages(messageArray);
 
             //opwarmen van de API
-            this.alprDataPo.beginEdit();
-            this.alprDataPo.setAttributeValue("ImageData", "1,1");
-            this.alprDataPo.getAction("ProcessImage").execute();
+            //this.alprDataPo.beginEdit();
+            //this.alprDataPo.setAttributeValue("ImageData", "1,1");
+            //this.alprDataPo.getAction("ProcessImage").execute();
         }
 
         private _imageCaptured(e: Event) {
@@ -209,7 +209,6 @@ namespace AlprApp.WebComponents {
             }
             
             //Indien een geldige message en geldige nummerplaat:
-            alert(plate + " - " + optionOfMessage);
             await this.alprDataPo.getAction("SendMessage").execute();
 
             //redirecten

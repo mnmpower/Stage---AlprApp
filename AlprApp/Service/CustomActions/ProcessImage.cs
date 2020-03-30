@@ -7,6 +7,8 @@ using Vidyano.Service.Repository;
 using AlprApp.Models;
 using System.Linq;
 using AlprApp.Service.Actions;
+using System.IO;
+using System.Drawing;
 
 namespace AlprApp.Service.CustomActions
 {
@@ -29,6 +31,9 @@ namespace AlprApp.Service.CustomActions
 
             //creating Base64String from imageData
             string base64String = imageData.Split(',')[1];
+
+            //image rescalen
+            base64String = RescaleImage(base64String);
 
             // Call AlprAPI...
             if (client.BaseAddress == null)
@@ -111,6 +116,58 @@ namespace AlprApp.Service.CustomActions
             // Return answer
             return po;
 
+        }
+
+        private string RescaleImage(string imageData)
+        {
+            // negeer de opwarming van de API
+            if (!imageData.Equals("1"))
+            {
+                //converten naar byte array
+                byte[] data = Convert.FromBase64String(imageData);
+
+                using (var ms = new MemoryStream(data))
+                {
+                    //omzetten naar image in c#
+                    var image = Image.FromStream(ms);
+                    //OUde afmetingen ophalen
+                    var oldWidth = image.Width;
+                    var oldHeight = image.Height;
+                    
+                    //Verhouding berekenen voor de herschaling
+                    var ratioX = (double)480 / image.Width;
+                    var ratioY = (double)640 / image.Height;
+                    var ratio = Math.Min(ratioX, ratioY);
+
+                    //Bereknen van nieuwe hoogte en breedte
+                    int newWidth;
+                    int newHeigt;
+                    if (oldWidth < oldHeight)
+                    {
+                        //Portreit mode: fixed height, rescaling width
+                        newWidth = (int)(image.Width * ratio);
+                        newHeigt = 640;
+                    } else
+                    {
+                        //landscape mode : fixed width, rescalig heigth
+                        newWidth = 480;
+                        newHeigt = (int)(image.Height * ratio);
+                    }
+
+                    //nieuwe image opstellen
+                    var newImage = new Bitmap(newWidth, newHeigt);
+                    Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeigt);
+                    Bitmap bmp = new Bitmap(newImage);
+
+                    //image converten naar data[]
+                    ImageConverter converter = new ImageConverter();
+                    data = (byte[])converter.ConvertTo(bmp, typeof(byte[]));
+                    
+                    //Byte[] omzetten naar Base64String en returnen
+                    return Convert.ToBase64String(data);
+                }
+            }
+            return "1,1";
         }
 
         private string createString(PlateObject[] canditdates)

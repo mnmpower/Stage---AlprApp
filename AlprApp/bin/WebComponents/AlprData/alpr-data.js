@@ -40,10 +40,6 @@ var AlprApp;
                                 }
                                 // Array zetten als property
                                 this._setMessages(messageArray);
-                                //opwarmen van de API
-                                this.alprDataPo.beginEdit();
-                                this.alprDataPo.setAttributeValue("ImageData", "1,1");
-                                this.alprDataPo.getAction("ProcessImage").execute();
                                 return [2 /*return*/];
                         }
                     });
@@ -152,9 +148,9 @@ var AlprApp;
                                     return [2 /*return*/];
                                 }
                                 //Indien een geldige message en geldige nummerplaat:
-                                alert(plate + " - " + optionOfMessage);
                                 return [4 /*yield*/, this.alprDataPo.getAction("SendMessage").execute()];
                             case 1:
+                                //Indien een geldige message en geldige nummerplaat:
                                 _a.sent();
                                 //redirecten
                                 window.location.replace("/Confirmation");

@@ -60,6 +60,9 @@ namespace AlprApp.WebComponents {
         public input;
         public selectedOption = 0;
 
+        public imageFromCamera;
+        public capturingImage = false;
+
 
 
         async attached() {
@@ -99,67 +102,67 @@ namespace AlprApp.WebComponents {
             //this.alprDataPo.getAction("ProcessImage").execute();
         }
 
-        private _imageCaptured(e: Event) {
-            this._setTrueAfterPictureUpload(true);
-            this.input = e.target as HTMLInputElement;
+        //private _imageCaptured(e: Event) {
+        //    this._setTrueAfterPictureUpload(true);
+        //    this.input = e.target as HTMLInputElement;
 
-            if (this.input.files && this.input.files[0]) {
-                var reader = new FileReader();
-                this.alprDataPo.beginEdit();
+        //    if (this.input.files && this.input.files[0]) {
+        //        var reader = new FileReader();
+        //        this.alprDataPo.beginEdit();
 
-                var tempThis = this;
-                reader.addEventListener(
-                    "load",
-                    async function () {
+        //        var tempThis = this;
+        //        reader.addEventListener(
+        //            "load",
+        //            async function () {
 
-                        //mijn code om de image te tonen
-                        var img = document.createElement('img');
-                        img.setAttribute('src', reader.result.toString());
-                        img.setAttribute('class', "thumb-image img-fluid");
+        //                //mijn code om de image te tonen
+        //                var img = document.createElement('img');
+        //                img.setAttribute('src', reader.result.toString());
+        //                img.setAttribute('class', "thumb-image img-fluid");
 
-                        var imageHolder = document.getElementById("image-holder");
+        //                var imageHolder = document.getElementById("image-holder");
 
-                        imageHolder.innerHTML = "";
+        //                imageHolder.innerHTML = "";
 
-                        imageHolder.appendChild(img);
-                        //tot hier
-                        setInterval(async () => {
+        //                imageHolder.appendChild(img);
+        //                //tot hier
+        //                setInterval(async () => {
 
-                            // code om image na te kijken op nummerplaat
-                            var src = reader.result;
-                            await tempThis.alprDataPo.setAttributeValue("ImageData", src);
-                            var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
-                            tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
-                            tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
+        //                    // code om image na te kijken op nummerplaat
+        //                    var src = reader.result;
+        //                    await tempThis.alprDataPo.setAttributeValue("ImageData", src);
+        //                    var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
+        //                    tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
+        //                    tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
 
 
-                            var plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
-                            if (plate != null) {
-                                if (plate === "null" || plate === "" || plate.length > 12) {
-                                    tempThis._setPlateEmptyAfterSend(true);
-                                    tempThis._setShowCandidates(false)
-                                    return;
-                                } else {
-                                    tempThis._setPlateEmptyAfterSend(false);
-                                }
-                            } else {
-                                tempThis._setPlateEmptyAfterSend(true);
-                                tempThis._setShowCandidates(false)
-                                return
-                            }
+        //                    var plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
+        //                    if (plate != null) {
+        //                        if (plate === "null" || plate === "" || plate.length > 12) {
+        //                            tempThis._setPlateEmptyAfterSend(true);
+        //                            tempThis._setShowCandidates(false)
+        //                            return;
+        //                        } else {
+        //                            tempThis._setPlateEmptyAfterSend(false);
+        //                        }
+        //                    } else {
+        //                        tempThis._setPlateEmptyAfterSend(true);
+        //                        tempThis._setShowCandidates(false)
+        //                        return
+        //                    }
 
-                            tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
-                            var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
-                            var candidates = candidatesString.split(';');
-                            tempThis._setCandidates(candidates);
-                            tempThis._setShowCandidates(true)
-                        },4000)
-                    },
-                    false
-                );
-                reader.readAsDataURL(this.input.files[0]);
-            }
-        }
+        //                    tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
+        //                    var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
+        //                    var candidates = candidatesString.split(';');
+        //                    tempThis._setCandidates(candidates);
+        //                    tempThis._setShowCandidates(true)
+        //                }, 4000)
+        //            },
+        //            false
+        //        );
+        //        reader.readAsDataURL(this.input.files[0]);
+        //    }
+        //}
 
         private async _sendForm(e: Event) {
             // Hier iets doen als ze op verzenden klikken.
@@ -257,15 +260,22 @@ namespace AlprApp.WebComponents {
         private _isPlateValide() {
             var value = this.alprDataPo.getAttributeValue("LicensePlate");
             if (value == null) {
+                this._setPlateEmptyAfterSend(true);
+                this._setShowCandidates(false);
                 return false;
             }
 
             if (value === "" || value.length > 10) {
+                this._setPlateEmptyAfterSend(true);
+                this._setShowCandidates(false);
                 return false;
             }
+            this._setPlateEmptyAfterSend(false);
+            this._setShowCandidates(true);
             return true;
         }
 
+        //change plate with candidate
         private _setPlate(event) {
             const item = event.target.dataset.item;
             this.alprDataPo.setAttributeValue("LicensePlate", item);
@@ -288,40 +298,22 @@ namespace AlprApp.WebComponents {
             //Declaraties
             const video = document.querySelector('video');
             const canvas = document.createElement('canvas');
-            const videoSelect = document.querySelector('select#videoSource');
-            //var img = document.createElement('img');
-            const img = (document.getElementById("screenshot"));
-            //groote van de camera definieren
-            const constraints = {
-                video: {
-                    width: {
-                        min: 390,
-                        ideal: 480,
-                        max: 3120,
-                    },
-                    height: {
-                        min: 520,
-                        ideal: 640,
-                        max: 4160
-                    },
-                    facingMode: 'environment'
-                },
-                audio: false
-                //video: { width: { exact: 480 }, height: { exact: 640 } }
-            };
 
+            function _screenshotVideo() {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                document.getElementById("screenshot").setAttribute('src', canvas.toDataURL("image/jpeg"));
+                tempThis.imageFromCamera = canvas.toDataURL("image/jpeg");
+            }
 
-            //video starten
-            //navigator.mediaDevices.getUserMedia(constraints)
-            //    .then((stream) => { video.srcObject = stream })
-            //    .catch(error => { console.error(error) });
+            var mainLoopId;
 
-
-            //VAN HIER  FF tEST
+            //Environment camera aanspreken indien aanwezig
             navigator.mediaDevices.enumerateDevices()
                 .then(devices => {
-                    var videoDevices = [];
-                    var videoDeviceID = "";
+                    let videoDevices = [];
+                    let videoDeviceID = "";
                     devices.forEach(function (device) {
                         console.log(device.kind + ": " + device.label +
                             " id = " + device.deviceId);
@@ -337,95 +329,42 @@ namespace AlprApp.WebComponents {
                     }
 
 
-                    var constraints = {
-                        width: {
-                            min: 390,
-                            ideal: 480,
-                            max: 3120,
-                        },
-                        height: {
-                            min: 520,
-                            ideal: 640,
-                            max: 4160
-                        },
+                    const constraints = {
+                        width: { min: 390, ideal: 480, max: 3120, },
+                        height: { min: 520, ideal: 640, max: 4160 },
                         deviceId: { exact: videoDeviceID }
                     };
+
                     return navigator.mediaDevices.getUserMedia({ video: constraints });
 
                 })
-                .then((stream) => { video.srcObject = stream })
+                .then((stream) => { video.srcObject = stream; return new Promise(resolve => video.onplaying = resolve); })
+                .then(() => mainLoopId = setInterval(_screenshotVideo, 500))
                 .catch(e => console.error(e));
-            //TOT HIER TT tEST
 
-            // To start the loop
+            this.alprDataPo.beginEdit();
 
-            if (!tempThis._isPlateValide()) {
+            document.getElementById("screenshot").addEventListener(
+                "load",
+                async function _sendImageToAPI() {
+                    clearInterval(mainLoopId);
 
-                var imageHolder = document.getElementById("image-holder");
-
-                var mainLoopId = setInterval(async function _screenshotVideo() {
-                    //screenshot nemen + senden naar API
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    canvas.getContext('2d').drawImage(video, 0, 0);
-                    img.setAttribute('src', canvas.toDataURL("image/jpeg"));
-                    img.setAttribute('class', "thumb-image img-fluid");
-
-
-
-                    imageHolder.appendChild(img);
-                    //plate zetten
-                    tempThis.alprDataPo.beginEdit();
-                    //tempThis._setPlateEmptyAfterSend(false);
-                    //tempThis._setTrueAfterPictureUpload(true);
-
-
-
-                    await tempThis.alprDataPo.setAttributeValue("ImageData", canvas.toDataURL("image/jpeg"));
-                    const returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
-
+                    tempThis._setTrueAfterPictureUpload(true);
+                    await tempThis.alprDataPo.setAttributeValue("ImageData", tempThis.imageFromCamera);
+                    var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
                     tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
                     tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
 
-                    //Indien niet valide herhalen
-                    if (tempThis._isPlateValide()) {
-
-                        // indien wel valide, doorgaan
-                        clearInterval(mainLoopId);
-                        alert("valide plate");
-
-                        var plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
-                        if (plate != null) {
-                            if (plate === "null" || plate === "" || plate.length > 12) {
-                                tempThis._setPlateEmptyAfterSend(true);
-                                tempThis._setShowCandidates(false)
-                                return;
-                            } else {
-                                tempThis._setPlateEmptyAfterSend(false);
-                            }
-                        } else {
-                            tempThis._setPlateEmptyAfterSend(true);
-                            tempThis._setShowCandidates(false)
-                            return
-                        }
-
-                        tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
-                        var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
-                        var candidates = candidatesString.split(';');
-                        tempThis._setCandidates(candidates);
-                        tempThis._setShowCandidates(true)
-
+                    if (!tempThis._isPlateValide()) {
+                        mainLoopId = setInterval(_screenshotVideo, 500)
+                        return
                     }
-
-
-
-                }, 3000);
-
-
-            }
-
-
-
+                    
+                    tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
+                    var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
+                    var candidates = candidatesString.split(';');
+                    tempThis._setCandidates(candidates);
+                })
         }
     }
 }

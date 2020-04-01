@@ -60,6 +60,9 @@ namespace AlprApp.WebComponents {
         public input;
         public selectedOption = 0;
 
+        public imageFromCamera;
+        public capturingImage = false;
+
 
 
         async attached() {
@@ -92,74 +95,8 @@ namespace AlprApp.WebComponents {
 
             // Array zetten als property
             this._setMessages(messageArray);
-
-            //opwarmen van de API
-            //this.alprDataPo.beginEdit();
-            //this.alprDataPo.setAttributeValue("ImageData", "1,1");
-            //this.alprDataPo.getAction("ProcessImage").execute();
         }
 
-        private _imageCaptured(e: Event) {
-            this._setTrueAfterPictureUpload(true);
-            this.input = e.target as HTMLInputElement;
-
-            if (this.input.files && this.input.files[0]) {
-                var reader = new FileReader();
-                this.alprDataPo.beginEdit();
-
-                var tempThis = this;
-                reader.addEventListener(
-                    "load",
-                    async function () {
-
-                        //mijn code om de image te tonen
-                        var img = document.createElement('img');
-                        img.setAttribute('src', reader.result.toString());
-                        img.setAttribute('class', "thumb-image img-fluid");
-
-                        var imageHolder = document.getElementById("image-holder");
-
-                        imageHolder.innerHTML = "";
-
-                        imageHolder.appendChild(img);
-                        //tot hier
-                        setInterval(async () => {
-
-                            // code om image na te kijken op nummerplaat
-                            var src = reader.result;
-                            await tempThis.alprDataPo.setAttributeValue("ImageData", src);
-                            var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
-                            tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
-                            tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
-
-
-                            var plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
-                            if (plate != null) {
-                                if (plate === "null" || plate === "" || plate.length > 12) {
-                                    tempThis._setPlateEmptyAfterSend(true);
-                                    tempThis._setShowCandidates(false)
-                                    return;
-                                } else {
-                                    tempThis._setPlateEmptyAfterSend(false);
-                                }
-                            } else {
-                                tempThis._setPlateEmptyAfterSend(true);
-                                tempThis._setShowCandidates(false)
-                                return
-                            }
-
-                            tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
-                            var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
-                            var candidates = candidatesString.split(';');
-                            tempThis._setCandidates(candidates);
-                            tempThis._setShowCandidates(true)
-                        },4000)
-                    },
-                    false
-                );
-                reader.readAsDataURL(this.input.files[0]);
-            }
-        }
 
         private async _sendForm(e: Event) {
             // Hier iets doen als ze op verzenden klikken.
@@ -237,6 +174,7 @@ namespace AlprApp.WebComponents {
 
         }
 
+        // waarde van het zelfgeschreven berichtopslagen in het PO
         private _setMessage() {
             this.alprDataPo.beginEdit();
             var textarea = (document.getElementById("inputSelfWrittenMelding")) as HTMLSelectElement;
@@ -245,8 +183,9 @@ namespace AlprApp.WebComponents {
             this._ValidateTextArea(textarea.value);
         }
 
+        // nakijken of er een melding geschreven is en deze niet gewoon een spatie is.
         private _ValidateTextArea(value: string) {
-            if (value === "") {
+            if (value === "" || value === " ") {
                 this._setMessageEmptyAfterSend(true);
                 return;
             } else {
@@ -254,44 +193,52 @@ namespace AlprApp.WebComponents {
             }
         }
 
+        // nakeijken of de plaat een nummerplaat terug geeft of een error melding + het juist zetten van de booleans om validatie te tonen.
         private _isPlateValide() {
             var value = this.alprDataPo.getAttributeValue("LicensePlate");
             if (value == null) {
+                this._setPlateEmptyAfterSend(true);
+                this._setShowCandidates(false);
                 return false;
             }
 
             if (value === "" || value.length > 10) {
+                this._setPlateEmptyAfterSend(true);
+                this._setShowCandidates(false);
                 return false;
             }
+            this._setPlateEmptyAfterSend(false);
+            this._setShowCandidates(true);
             return true;
         }
 
+        //plate wisselen met een candidaat.
         private _setPlate(event) {
             const item = event.target.dataset.item;
             this.alprDataPo.setAttributeValue("LicensePlate", item);
             this.$$("#licensePlate").innerText = item;
         }
-
-
-
-
-
-
-
-
-
+        
+        // na drukken op neem een foto
         private _videoCaptured(e: Event) {
             this._setTrueAfterPictureUpload(true);
-
             var tempThis = this;
 
             //Declaraties
             const video = document.querySelector('video');
             const canvas = document.createElement('canvas');
-            const videoSelect = document.querySelector('select#videoSource');
-            //var img = document.createElement('img');
-            const img = (document.getElementById("screenshot"));
-            
+            var mainLoopId;
+
+            // foto nemen van de camera en tonen in de html.
+            function _screenshotVideo() {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                document.getElementById("screenshot").setAttribute('src', canvas.toDataURL("image/jpeg"));
+                tempThis.imageFromCamera = canvas.toDataURL("image/jpeg");
+            }
+
+
             //Environment camera aanspreken indien aanwezig
             navigator.mediaDevices.enumerateDevices()
                 .then(devices => {
@@ -313,93 +260,49 @@ namespace AlprApp.WebComponents {
 
 
                     const constraints = {
-                        width: {
-                            min: 390,
-                            ideal: 480,
-                            max: 3120,
-                        },
-                        height: {
-                            min: 520,
-                            ideal: 640,
-                            max: 4160
-                        },
+                        width: { min: 390, ideal: 480, max: 3120, },
+                        height: { min: 520, ideal: 640, max: 4160 },
                         deviceId: { exact: videoDeviceID }
                     };
+
                     return navigator.mediaDevices.getUserMedia({ video: constraints });
 
-                })
-                .then((stream) => { video.srcObject = stream })
+                }) //promise zetten op pas door te gaan als de camera actief is
+                .then((stream) => { video.srcObject = stream; return new Promise(resolve => video.onplaying = resolve); }) 
+                .then(() => mainLoopId = setInterval(_screenshotVideo, 500)) // foto interval starten
                 .catch(e => console.error(e));
 
-            // To start the loop
+            this.alprDataPo.beginEdit();
 
-            if (!tempThis._isPlateValide()) {
+            //functie aanroepen als de foto wordt veranderd
+            document.getElementById("screenshot").addEventListener(
+                "load",
+                async function _sendImageToAPI() {
+                    //stoppen met nieuwe fotos te nemen
+                    clearInterval(mainLoopId);
 
-                var imageHolder = document.getElementById("image-holder");
+                    //image op PO zetten
+                    await tempThis.alprDataPo.setAttributeValue("ImageData", tempThis.imageFromCamera);
 
-                var mainLoopId = setInterval(async function _screenshotVideo() {
-                    //screenshot nemen + senden naar API
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    canvas.getContext('2d').drawImage(video, 0, 0);
-                    img.setAttribute('src', canvas.toDataURL("image/jpeg"));
-                    img.setAttribute('class', "thumb-image img-fluid");
+                    //custom action aanroepen
+                    var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
 
-
-
-                    imageHolder.appendChild(img);
-                    //plate zetten
-                    tempThis.alprDataPo.beginEdit();
-                    //tempThis._setPlateEmptyAfterSend(false);
-                    //tempThis._setTrueAfterPictureUpload(true);
-
-
-
-                    await tempThis.alprDataPo.setAttributeValue("ImageData", canvas.toDataURL("image/jpeg"));
-                    const returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
-
+                    //waardes terug ophalen van de custiom action
                     tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
                     tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
 
-                    //Indien niet valide herhalen
-                    if (tempThis._isPlateValide()) {
-
-                        // indien wel valide, doorgaan
-                        clearInterval(mainLoopId);
-                        alert("valide plate");
-
-                        var plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
-                        if (plate != null) {
-                            if (plate === "null" || plate === "" || plate.length > 12) {
-                                tempThis._setPlateEmptyAfterSend(true);
-                                tempThis._setShowCandidates(false)
-                                return;
-                            } else {
-                                tempThis._setPlateEmptyAfterSend(false);
-                            }
-                        } else {
-                            tempThis._setPlateEmptyAfterSend(true);
-                            tempThis._setShowCandidates(false)
-                            return
-                        }
-
-                        tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
-                        var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
-                        var candidates = candidatesString.split(';');
-                        tempThis._setCandidates(candidates);
-                        tempThis._setShowCandidates(true)
-
+                    //indien plate niet valie is nieuwe foto maken en deze functie stoppen
+                    if (!tempThis._isPlateValide()) {
+                        mainLoopId = setInterval(_screenshotVideo, 500)
+                        return
                     }
 
-
-
-                }, 3000);
-
-
-            }
-
-
-
+                    //indien foto wel valide is alles tonen in HTML
+                    tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
+                    var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
+                    var candidates = candidatesString.split(';');
+                    tempThis._setCandidates(candidates);
+                })
         }
     }
 }

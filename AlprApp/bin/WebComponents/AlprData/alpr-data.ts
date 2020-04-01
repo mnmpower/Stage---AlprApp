@@ -123,16 +123,13 @@ namespace AlprApp.WebComponents {
 
                         imageHolder.appendChild(img);
                         //tot hier
-                        setTimeout(async () => {
+                        setInterval(async () => {
 
                             // code om image na te kijken op nummerplaat
                             var src = reader.result;
                             await tempThis.alprDataPo.setAttributeValue("ImageData", src);
-                            debugger;
                             var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
-                            debugger;
                             tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
-                            debugger;
                             tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
 
 
@@ -315,10 +312,50 @@ namespace AlprApp.WebComponents {
 
 
             //video starten
-            navigator.mediaDevices.getUserMedia(constraints)
-                .then((stream) => { video.srcObject = stream })
-                .catch(error => { console.error(error) });
+            //navigator.mediaDevices.getUserMedia(constraints)
+            //    .then((stream) => { video.srcObject = stream })
+            //    .catch(error => { console.error(error) });
 
+
+            //VAN HIER  FF tEST
+            navigator.mediaDevices.enumerateDevices()
+                .then(devices => {
+                    var videoDevices = [];
+                    var videoDeviceID = "";
+                    devices.forEach(function (device) {
+                        console.log(device.kind + ": " + device.label +
+                            " id = " + device.deviceId);
+                        if (device.kind == "videoinput") {
+                            videoDevices.push(device.deviceId);
+                        }
+                    });
+
+                    if (videoDevices.length == 1) {
+                        videoDeviceID = videoDevices[0]
+                    } else if (videoDevices.length == 2) {
+                        videoDeviceID = videoDevices[1]
+                    }
+
+
+                    var constraints = {
+                        width: {
+                            min: 390,
+                            ideal: 480,
+                            max: 3120,
+                        },
+                        height: {
+                            min: 520,
+                            ideal: 640,
+                            max: 4160
+                        },
+                        deviceId: { exact: videoDeviceID }
+                    };
+                    return navigator.mediaDevices.getUserMedia({ video: constraints });
+
+                })
+                .then((stream) => { video.srcObject = stream })
+                .catch(e => console.error(e));
+            //TOT HIER TT tEST
 
             // To start the loop
 

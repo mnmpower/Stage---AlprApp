@@ -73,13 +73,10 @@ var AlprApp;
                                                 return [4 /*yield*/, tempThis.alprDataPo.setAttributeValue("ImageData", src)];
                                             case 1:
                                                 _a.sent();
-                                                debugger;
                                                 return [4 /*yield*/, tempThis.alprDataPo.getAction("ProcessImage").execute()];
                                             case 2:
                                                 returnedPO = _a.sent();
-                                                debugger;
                                                 tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate");
-                                                debugger;
                                                 tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
                                                 plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
                                                 if (plate != null) {
@@ -226,9 +223,25 @@ var AlprApp;
                 var videoSelect = document.querySelector('select#videoSource');
                 //var img = document.createElement('img');
                 var img = (document.getElementById("screenshot"));
-                //groote van de camera definieren
-                var constraints = {
-                    video: {
+                //Environment camera aanspreken indien aanwezig
+                navigator.mediaDevices.enumerateDevices()
+                    .then(function (devices) {
+                    var videoDevices = [];
+                    var videoDeviceID = "";
+                    devices.forEach(function (device) {
+                        console.log(device.kind + ": " + device.label +
+                            " id = " + device.deviceId);
+                        if (device.kind == "videoinput") {
+                            videoDevices.push(device.deviceId);
+                        }
+                    });
+                    if (videoDevices.length == 1) {
+                        videoDeviceID = videoDevices[0];
+                    }
+                    else if (videoDevices.length == 2) {
+                        videoDeviceID = videoDevices[1];
+                    }
+                    var constraints = {
                         width: {
                             min: 390,
                             ideal: 480,
@@ -239,15 +252,12 @@ var AlprApp;
                             ideal: 640,
                             max: 4160
                         },
-                        facingMode: 'environment'
-                    },
-                    audio: false
-                    //video: { width: { exact: 480 }, height: { exact: 640 } }
-                };
-                //video starten
-                navigator.mediaDevices.getUserMedia(constraints)
+                        deviceId: { exact: videoDeviceID }
+                    };
+                    return navigator.mediaDevices.getUserMedia({ video: constraints });
+                })
                     .then(function (stream) { video.srcObject = stream; })
-                    .catch(function (error) { console.error(error); });
+                    .catch(function (e) { return console.error(e); });
                 // To start the loop
                 if (!tempThis._isPlateValide()) {
                     var imageHolder = document.getElementById("image-holder");

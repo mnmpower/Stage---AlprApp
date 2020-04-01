@@ -128,11 +128,8 @@ namespace AlprApp.WebComponents {
                             // code om image na te kijken op nummerplaat
                             var src = reader.result;
                             await tempThis.alprDataPo.setAttributeValue("ImageData", src);
-                            debugger;
                             var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
-                            debugger;
                             tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
-                            debugger;
                             tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
 
 
@@ -294,31 +291,45 @@ namespace AlprApp.WebComponents {
             const videoSelect = document.querySelector('select#videoSource');
             //var img = document.createElement('img');
             const img = (document.getElementById("screenshot"));
-            //groote van de camera definieren
-            const constraints = {
-                video: {
-                    width: {
-                        min: 390,
-                        ideal: 480,
-                        max: 3120,
-                    },
-                    height: {
-                        min: 520,
-                        ideal: 640,
-                        max: 4160
-                    },
-                    facingMode: 'environment'
-                },
-                audio: false
-                //video: { width: { exact: 480 }, height: { exact: 640 } }
-            };
+            
+            //Environment camera aanspreken indien aanwezig
+            navigator.mediaDevices.enumerateDevices()
+                .then(devices => {
+                    let videoDevices = [];
+                    let videoDeviceID = "";
+                    devices.forEach(function (device) {
+                        console.log(device.kind + ": " + device.label +
+                            " id = " + device.deviceId);
+                        if (device.kind == "videoinput") {
+                            videoDevices.push(device.deviceId);
+                        }
+                    });
+
+                    if (videoDevices.length == 1) {
+                        videoDeviceID = videoDevices[0]
+                    } else if (videoDevices.length == 2) {
+                        videoDeviceID = videoDevices[1]
+                    }
 
 
-            //video starten
-            navigator.mediaDevices.getUserMedia(constraints)
+                    const constraints = {
+                        width: {
+                            min: 390,
+                            ideal: 480,
+                            max: 3120,
+                        },
+                        height: {
+                            min: 520,
+                            ideal: 640,
+                            max: 4160
+                        },
+                        deviceId: { exact: videoDeviceID }
+                    };
+                    return navigator.mediaDevices.getUserMedia({ video: constraints });
+
+                })
                 .then((stream) => { video.srcObject = stream })
-                .catch(error => { console.error(error) });
-
+                .catch(e => console.error(e));
 
             // To start the loop
 

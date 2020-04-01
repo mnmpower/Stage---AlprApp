@@ -25,7 +25,7 @@ namespace AlprApp.Service.CustomActions
             AlprReturn alprReturn = new AlprReturn();
             AlprWithHeader alprWithHeader = new AlprWithHeader();
             string lisencePlate = "";
-
+            
             var po = e.Parent;
             var imageData = po.GetAttributeValue("ImageData").ToString();
 
@@ -70,6 +70,8 @@ namespace AlprApp.Service.CustomActions
             {
                 // Set value in LicensePlate from Persistant Object + Creating visable error for user
                 po.SetAttributeValue("LicensePlate", "Er ging iets mis.\nProbeer opnieuw!\nAPI  niet gevonden.");
+                po.SetAttributeValue("InDB", "NOT IN DB");
+                po.SetAttributeValue("Candidates", ";");
 
                 // Return answer
                 return po;
@@ -80,7 +82,7 @@ namespace AlprApp.Service.CustomActions
             {
                 // Set value in LicensePlate from Persistant Object + Creating visable error for user
                 po.SetAttributeValue("LicensePlate", "Geen plaat gevonden.\n Probeer opnieuw aub!");
-                
+
                 // Return answer
                 return po;
             } else

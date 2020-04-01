@@ -44,26 +44,28 @@
                         </template>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6" on-tap="_videoCaptured">
 
                                 <!------------------->
                                 <!-- IMAGE UPLOADS -->
                                 <!------------------->
 
-                                <input id="file" type="file" accept="image/*" capture="camera">
+                                <!--<input id="file" type="file" accept="video/*" capture="camcorder">-->
+                                <!--<input id="file" type="file" accept="image/*" capture="camera">-->
                                 <label for="fileUpload" class="custom-fileUpload vc-prepare childDiv">
                                     <i class="material-icons md-18 mr-3 vertical-center">cloud_upload</i>Neem een foto
                                 </label>
-                                <input id="fileUpload" type="file" accept="image/*" capture="camera" on-change="_imageCaptured" />
+                                <!--<input id="fileUpload" type="file" accept="video/*" capture="camcorder" on-change="_videoCaptured" />-->
+                                <!--<input id="fileUpload" type="file" accept="image/*" capture="camera" on-change="_imageCaptured" />-->
                             </div>
-                            <div id="image-holder" class="col-6"> </div>
+                            <div id="image-holder" class="col-6">
+                                <video autoplay style="display:none"></video>
+                                <!--<video autoplay></video>-->
+                                <img src="" id="screenshot" />
+                            </div>
 
                         </div>
-                        <div id="b64"></div>
-
-
-                        <div id="stap1">
-
+                        <input id="file" type="file" style="display:block !important" accept="image/*" capture="camera" on-change="_imageCaptured" />
                         </div>
                         <!----------------->
                         <!-- LicensePlate-->

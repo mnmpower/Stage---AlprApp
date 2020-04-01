@@ -54,48 +54,59 @@ var AlprApp;
                     var tempThis = this;
                     reader.addEventListener("load", function () {
                         return __awaiter(this, void 0, void 0, function () {
-                            var img, imageHolder, src, returnedPO, plate, candidatesString, candidates;
+                            var img, imageHolder;
+                            var _this = this;
                             return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        img = document.createElement('img');
-                                        img.setAttribute('src', reader.result.toString());
-                                        img.setAttribute('class', "thumb-image img-fluid");
-                                        imageHolder = document.getElementById("image-holder");
-                                        imageHolder.innerHTML = "";
-                                        imageHolder.appendChild(img);
-                                        src = reader.result;
-                                        return [4 /*yield*/, tempThis.alprDataPo.setAttributeValue("ImageData", src)];
-                                    case 1:
-                                        _a.sent();
-                                        return [4 /*yield*/, tempThis.alprDataPo.getAction("ProcessImage").execute()];
-                                    case 2:
-                                        returnedPO = _a.sent();
-                                        tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate");
-                                        tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
-                                        plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
-                                        if (plate != null) {
-                                            if (plate === "null" || plate === "" || plate.length > 18) {
-                                                tempThis._setPlateEmptyAfterSend(true);
-                                                tempThis._setShowCandidates(false);
+                                img = document.createElement('img');
+                                img.setAttribute('src', reader.result.toString());
+                                img.setAttribute('class', "thumb-image img-fluid");
+                                imageHolder = document.getElementById("image-holder");
+                                imageHolder.innerHTML = "";
+                                imageHolder.appendChild(img);
+                                //tot hier
+                                setInterval(function () { return __awaiter(_this, void 0, void 0, function () {
+                                    var src, returnedPO, plate, candidatesString, candidates;
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                src = reader.result;
+                                                return [4 /*yield*/, tempThis.alprDataPo.setAttributeValue("ImageData", src)];
+                                            case 1:
+                                                _a.sent();
+                                                debugger;
+                                                return [4 /*yield*/, tempThis.alprDataPo.getAction("ProcessImage").execute()];
+                                            case 2:
+                                                returnedPO = _a.sent();
+                                                debugger;
+                                                tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate");
+                                                debugger;
+                                                tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
+                                                plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
+                                                if (plate != null) {
+                                                    if (plate === "null" || plate === "" || plate.length > 12) {
+                                                        tempThis._setPlateEmptyAfterSend(true);
+                                                        tempThis._setShowCandidates(false);
+                                                        return [2 /*return*/];
+                                                    }
+                                                    else {
+                                                        tempThis._setPlateEmptyAfterSend(false);
+                                                    }
+                                                }
+                                                else {
+                                                    tempThis._setPlateEmptyAfterSend(true);
+                                                    tempThis._setShowCandidates(false);
+                                                    return [2 /*return*/];
+                                                }
+                                                tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
+                                                candidatesString = returnedPO.getAttributeValue("Candidates");
+                                                candidates = candidatesString.split(';');
+                                                tempThis._setCandidates(candidates);
+                                                tempThis._setShowCandidates(true);
                                                 return [2 /*return*/];
-                                            }
-                                            else {
-                                                tempThis._setPlateEmptyAfterSend(false);
-                                            }
                                         }
-                                        else {
-                                            tempThis._setPlateEmptyAfterSend(true);
-                                            tempThis._setShowCandidates(false);
-                                            return [2 /*return*/];
-                                        }
-                                        tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
-                                        candidatesString = returnedPO.getAttributeValue("Candidates");
-                                        candidates = candidatesString.split(';');
-                                        tempThis._setCandidates(candidates);
-                                        tempThis._setShowCandidates(true);
-                                        return [2 /*return*/];
-                                }
+                                    });
+                                }); }, 4000);
+                                return [2 /*return*/];
                             });
                         });
                     }, false);
@@ -191,19 +202,115 @@ var AlprApp;
                     this._setMessageEmptyAfterSend(false);
                 }
             };
-            AlprData.prototype._ValidatePlate = function (value) {
+            AlprData.prototype._isPlateValide = function () {
+                var value = this.alprDataPo.getAttributeValue("LicensePlate");
+                if (value == null) {
+                    return false;
+                }
                 if (value === "" || value.length > 10) {
-                    this._setPlateEmptyAfterSend(true);
-                    return;
+                    return false;
                 }
-                else {
-                    this._setPlateEmptyAfterSend(false);
-                }
+                return true;
             };
             AlprData.prototype._setPlate = function (event) {
                 var item = event.target.dataset.item;
                 this.alprDataPo.setAttributeValue("LicensePlate", item);
                 this.$$("#licensePlate").innerText = item;
+            };
+            AlprData.prototype._videoCaptured = function (e) {
+                this._setTrueAfterPictureUpload(true);
+                var tempThis = this;
+                //Declaraties
+                var video = document.querySelector('video');
+                var canvas = document.createElement('canvas');
+                var videoSelect = document.querySelector('select#videoSource');
+                //var img = document.createElement('img');
+                var img = (document.getElementById("screenshot"));
+                //groote van de camera definieren
+                var constraints = {
+                    video: {
+                        width: {
+                            min: 390,
+                            ideal: 480,
+                            max: 3120,
+                        },
+                        height: {
+                            min: 520,
+                            ideal: 640,
+                            max: 4160
+                        },
+                        facingMode: 'environment'
+                    },
+                    audio: false
+                    //video: { width: { exact: 480 }, height: { exact: 640 } }
+                };
+                //video starten
+                navigator.mediaDevices.getUserMedia(constraints)
+                    .then(function (stream) { video.srcObject = stream; })
+                    .catch(function (error) { console.error(error); });
+                // To start the loop
+                if (!tempThis._isPlateValide()) {
+                    var imageHolder = document.getElementById("image-holder");
+                    var mainLoopId = setInterval(function _screenshotVideo() {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var returnedPO, plate, candidatesString, candidates;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        //screenshot nemen + senden naar API
+                                        canvas.width = video.videoWidth;
+                                        canvas.height = video.videoHeight;
+                                        canvas.getContext('2d').drawImage(video, 0, 0);
+                                        img.setAttribute('src', canvas.toDataURL("image/jpeg"));
+                                        img.setAttribute('class', "thumb-image img-fluid");
+                                        imageHolder.appendChild(img);
+                                        //plate zetten
+                                        tempThis.alprDataPo.beginEdit();
+                                        //tempThis._setPlateEmptyAfterSend(false);
+                                        //tempThis._setTrueAfterPictureUpload(true);
+                                        return [4 /*yield*/, tempThis.alprDataPo.setAttributeValue("ImageData", canvas.toDataURL("image/jpeg"))];
+                                    case 1:
+                                        //tempThis._setPlateEmptyAfterSend(false);
+                                        //tempThis._setTrueAfterPictureUpload(true);
+                                        _a.sent();
+                                        return [4 /*yield*/, tempThis.alprDataPo.getAction("ProcessImage").execute()];
+                                    case 2:
+                                        returnedPO = _a.sent();
+                                        tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate");
+                                        tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
+                                        //Indien niet valide herhalen
+                                        if (tempThis._isPlateValide()) {
+                                            // indien wel valide, doorgaan
+                                            clearInterval(mainLoopId);
+                                            alert("valide plate");
+                                            plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
+                                            if (plate != null) {
+                                                if (plate === "null" || plate === "" || plate.length > 12) {
+                                                    tempThis._setPlateEmptyAfterSend(true);
+                                                    tempThis._setShowCandidates(false);
+                                                    return [2 /*return*/];
+                                                }
+                                                else {
+                                                    tempThis._setPlateEmptyAfterSend(false);
+                                                }
+                                            }
+                                            else {
+                                                tempThis._setPlateEmptyAfterSend(true);
+                                                tempThis._setShowCandidates(false);
+                                                return [2 /*return*/];
+                                            }
+                                            tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
+                                            candidatesString = returnedPO.getAttributeValue("Candidates");
+                                            candidates = candidatesString.split(';');
+                                            tempThis._setCandidates(candidates);
+                                            tempThis._setShowCandidates(true);
+                                        }
+                                        return [2 /*return*/];
+                                }
+                            });
+                        });
+                    }, 3000);
+                }
             };
             AlprData = __decorate([
                 Vidyano.WebComponents.WebComponent.register({

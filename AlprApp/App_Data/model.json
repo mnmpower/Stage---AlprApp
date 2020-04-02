@@ -2129,6 +2129,56 @@
           "Query": {
             "$ref": "Query:66993f53-af3e-4d17-b907-acefc4b80463"
           }
+        },
+        {
+          "Offset": 20,
+          "Title": {
+            "en": "Cars"
+          },
+          "Name": "Cars",
+          "Query": {
+            "$ref": "Query:541523ff-4e95-4fdc-9ddb-bbee820117f8"
+          }
+        },
+        {
+          "Offset": 30,
+          "Title": {
+            "en": "Messages"
+          },
+          "Name": "Messages",
+          "Query": {
+            "$ref": "Query:da53d933-d4ab-4db4-8085-be6664699fce"
+          }
+        },
+        {
+          "Offset": 40,
+          "Title": {
+            "en": "Person cars"
+          },
+          "Name": "PersonCars",
+          "Query": {
+            "$ref": "Query:54fd1386-46ad-4122-9fca-d85d83419e6e"
+          }
+        },
+        {
+          "Offset": 50,
+          "Title": {
+            "en": "Persons"
+          },
+          "Name": "Persons",
+          "Query": {
+            "$ref": "Query:26f175c1-d733-4d42-b3c1-c5e19a44ec9a"
+          }
+        },
+        {
+          "Offset": 60,
+          "Title": {
+            "en": "Premade messages"
+          },
+          "Name": "PremadeMessages",
+          "Query": {
+            "$ref": "Query:5eaadf44-b377-4b61-bb78-8cacb0ec75f2"
+          }
         }
       ]
     }

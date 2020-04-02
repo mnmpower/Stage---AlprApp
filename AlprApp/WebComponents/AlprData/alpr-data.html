@@ -59,16 +59,16 @@
                             </div>
                             <div id="image-holder" class="col-6">
                                 <video autoplay style="display:none"></video>
-                                <!--<video autoplay></video>-->
                                 <img src="" id="screenshot" class="thumb-image img-fluid" on-change="_sendImageToAPI" />
                             </div>
+                            
 
                         </div>
                         <!----------------->
                         <!-- LicensePlate-->
                         <!----------------->
                         <template is="dom-if" if="[[plateEmptyAfterSend]]">
-                            <div class="text-danger mb-3">Trek een goede foto van een nummerplaat!</div>
+                            <div class="text-danger my-3 text-center">Trek een goede foto van een nummerplaat!</div>
                         </template>
                         <template is="dom-if" if="[[trueAfterPictureUpload]]">
                             <div class="mt-3 text-center">

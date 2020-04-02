@@ -9,6 +9,7 @@ var AlprApp;
                 var _this = _super !== null && _super.apply(this, arguments) || this;
                 _this.selectedOption = 0;
                 _this.capturingImage = false;
+                _this.klicked = false;
                 return _this;
             }
             AlprData.prototype.attached = function () {
@@ -46,57 +47,6 @@ var AlprApp;
                     });
                 });
             };
-            //private _imageCaptured(e: Event) {
-            //    this._setTrueAfterPictureUpload(true);
-            //    this.input = e.target as HTMLInputElement;
-            //    if (this.input.files && this.input.files[0]) {
-            //        var reader = new FileReader();
-            //        this.alprDataPo.beginEdit();
-            //        var tempThis = this;
-            //        reader.addEventListener(
-            //            "load",
-            //            async function () {
-            //                //mijn code om de image te tonen
-            //                var img = document.createElement('img');
-            //                img.setAttribute('src', reader.result.toString());
-            //                img.setAttribute('class', "thumb-image img-fluid");
-            //                var imageHolder = document.getElementById("image-holder");
-            //                imageHolder.innerHTML = "";
-            //                imageHolder.appendChild(img);
-            //                //tot hier
-            //                setInterval(async () => {
-            //                    // code om image na te kijken op nummerplaat
-            //                    var src = reader.result;
-            //                    await tempThis.alprDataPo.setAttributeValue("ImageData", src);
-            //                    var returnedPO = await tempThis.alprDataPo.getAction("ProcessImage").execute();
-            //                    tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate") as string;
-            //                    tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
-            //                    var plate = tempThis.alprDataPo.getAttributeValue("LicensePlate");
-            //                    if (plate != null) {
-            //                        if (plate === "null" || plate === "" || plate.length > 12) {
-            //                            tempThis._setPlateEmptyAfterSend(true);
-            //                            tempThis._setShowCandidates(false)
-            //                            return;
-            //                        } else {
-            //                            tempThis._setPlateEmptyAfterSend(false);
-            //                        }
-            //                    } else {
-            //                        tempThis._setPlateEmptyAfterSend(true);
-            //                        tempThis._setShowCandidates(false)
-            //                        return
-            //                    }
-            //                    tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
-            //                    var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
-            //                    var candidates = candidatesString.split(';');
-            //                    tempThis._setCandidates(candidates);
-            //                    tempThis._setShowCandidates(true)
-            //                }, 4000)
-            //            },
-            //            false
-            //        );
-            //        reader.readAsDataURL(this.input.files[0]);
-            //    }
-            //}
             AlprData.prototype._sendForm = function (e) {
                 return __awaiter(this, void 0, void 0, function () {
                     var optionOfMessage, textarea, dropdown, m, premadeMessageId, plate;
@@ -171,14 +121,16 @@ var AlprApp;
                     this._setWriteOwnMessage(false);
                 }
             };
+            // waarde van het zelfgeschreven berichtopslagen in het PO
             AlprData.prototype._setMessage = function () {
                 this.alprDataPo.beginEdit();
                 var textarea = (document.getElementById("inputSelfWrittenMelding"));
                 this.alprDataPo.setAttributeValue("Message", textarea.value);
                 this._ValidateTextArea(textarea.value);
             };
+            // nakijken of er een melding geschreven is en deze niet gewoon een spatie is.
             AlprData.prototype._ValidateTextArea = function (value) {
-                if (value === "") {
+                if (value === "" || value === " ") {
                     this._setMessageEmptyAfterSend(true);
                     return;
                 }
@@ -186,6 +138,7 @@ var AlprApp;
                     this._setMessageEmptyAfterSend(false);
                 }
             };
+            // nakeijken of de plaat een nummerplaat terug geeft of een error melding + het juist zetten van de booleans om validatie te tonen.
             AlprData.prototype._isPlateValide = function () {
                 var value = this.alprDataPo.getAttributeValue("LicensePlate");
                 if (value == null) {
@@ -202,18 +155,27 @@ var AlprApp;
                 this._setShowCandidates(true);
                 return true;
             };
-            //change plate with candidate
+            //plate wisselen met een candidaat.
             AlprData.prototype._setPlate = function (event) {
                 var item = event.target.dataset.item;
                 this.alprDataPo.setAttributeValue("LicensePlate", item);
                 this.$$("#licensePlate").innerText = item;
             };
+            // na drukken op neem een foto
             AlprData.prototype._videoCaptured = function (e) {
                 this._setTrueAfterPictureUpload(true);
                 var tempThis = this;
+                if (this.klicked) {
+                    return;
+                }
+                else {
+                    this.klicked = true;
+                }
                 //Declaraties
                 var video = document.querySelector('video');
                 var canvas = document.createElement('canvas');
+                var mainLoopId;
+                // foto nemen van de camera en tonen in de html.
                 function _screenshotVideo() {
                     canvas.width = video.videoWidth;
                     canvas.height = video.videoHeight;
@@ -221,7 +183,6 @@ var AlprApp;
                     document.getElementById("screenshot").setAttribute('src', canvas.toDataURL("image/jpeg"));
                     tempThis.imageFromCamera = canvas.toDataURL("image/jpeg");
                 }
-                var mainLoopId;
                 //Environment camera aanspreken indien aanwezig
                 navigator.mediaDevices.enumerateDevices()
                     .then(function (devices) {
@@ -246,35 +207,42 @@ var AlprApp;
                         deviceId: { exact: videoDeviceID }
                     };
                     return navigator.mediaDevices.getUserMedia({ video: constraints });
-                })
+                }) //promise zetten op pas door te gaan als de camera actief is
                     .then(function (stream) { video.srcObject = stream; return new Promise(function (resolve) { return video.onplaying = resolve; }); })
-                    .then(function () { return mainLoopId = setInterval(_screenshotVideo, 500); })
+                    .then(function () { return mainLoopId = setInterval(_screenshotVideo, 500); }) // foto interval starten
                     .catch(function (e) { return console.error(e); });
                 this.alprDataPo.beginEdit();
+                //functie aanroepen als de foto wordt veranderd
                 document.getElementById("screenshot").addEventListener("load", function _sendImageToAPI() {
                     return __awaiter(this, void 0, void 0, function () {
                         var returnedPO, candidatesString, candidates;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
+                                    //stoppen met nieuwe fotos te nemen
                                     clearInterval(mainLoopId);
-                                    tempThis._setTrueAfterPictureUpload(true);
+                                    //image op PO zetten
                                     return [4 /*yield*/, tempThis.alprDataPo.setAttributeValue("ImageData", tempThis.imageFromCamera)];
                                 case 1:
+                                    //image op PO zetten
                                     _a.sent();
                                     return [4 /*yield*/, tempThis.alprDataPo.getAction("ProcessImage").execute()];
                                 case 2:
                                     returnedPO = _a.sent();
+                                    //waardes terug ophalen van de custiom action
                                     tempThis.$$("#licensePlate").innerText = returnedPO.getAttributeValue("LicensePlate");
                                     tempThis.alprDataPo.setAttributeValue("LicensePlate", returnedPO.getAttributeValue("LicensePlate"));
+                                    //indien plate niet valie is nieuwe foto maken en deze functie stoppen
                                     if (!tempThis._isPlateValide()) {
                                         mainLoopId = setInterval(_screenshotVideo, 500);
                                         return [2 /*return*/];
                                     }
+                                    //indien foto wel valide is alles tonen in HTML
                                     tempThis.alprDataPo.setAttributeValue("InDB", returnedPO.getAttributeValue("InDB"));
                                     candidatesString = returnedPO.getAttributeValue("Candidates");
                                     candidates = candidatesString.split(';');
                                     tempThis._setCandidates(candidates);
+                                    tempThis.klicked = false;
                                     return [2 /*return*/];
                             }
                         });

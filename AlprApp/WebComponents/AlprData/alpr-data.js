@@ -9,6 +9,7 @@ var AlprApp;
                 var _this = _super !== null && _super.apply(this, arguments) || this;
                 _this.selectedOption = 0;
                 _this.capturingImage = false;
+                _this.klicked = false;
                 return _this;
             }
             AlprData.prototype.attached = function () {
@@ -164,6 +165,12 @@ var AlprApp;
             AlprData.prototype._videoCaptured = function (e) {
                 this._setTrueAfterPictureUpload(true);
                 var tempThis = this;
+                if (this.klicked) {
+                    return;
+                }
+                else {
+                    this.klicked = true;
+                }
                 //Declaraties
                 var video = document.querySelector('video');
                 var canvas = document.createElement('canvas');
@@ -235,6 +242,7 @@ var AlprApp;
                                     candidatesString = returnedPO.getAttributeValue("Candidates");
                                     candidates = candidatesString.split(';');
                                     tempThis._setCandidates(candidates);
+                                    tempThis.klicked = false;
                                     return [2 /*return*/];
                             }
                         });

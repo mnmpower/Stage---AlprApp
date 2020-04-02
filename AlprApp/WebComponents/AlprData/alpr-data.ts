@@ -62,6 +62,7 @@ namespace AlprApp.WebComponents {
 
         public imageFromCamera;
         public capturingImage = false;
+        public klicked = false;
 
 
 
@@ -223,6 +224,11 @@ namespace AlprApp.WebComponents {
         private _videoCaptured(e: Event) {
             this._setTrueAfterPictureUpload(true);
             var tempThis = this;
+            if (this.klicked) {
+                return;
+            } else {
+                this.klicked = true;
+            }
 
             //Declaraties
             const video = document.querySelector('video');
@@ -302,6 +308,7 @@ namespace AlprApp.WebComponents {
                     var candidatesString = returnedPO.getAttributeValue("Candidates") as string;
                     var candidates = candidatesString.split(';');
                     tempThis._setCandidates(candidates);
+                    tempThis.klicked = false;
                 })
         }
     }

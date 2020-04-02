@@ -1515,7 +1515,9 @@
               }
             }
           ],
-          "Queries": []
+          "Queries": [
+            "0f6d4805-5af9-4877-8414-aea953d02839"
+          ]
         },
         "d267c5e6-ebf9-3d05-a0ba-4751dafebaf1": {
           "$id": "PersistentObject:d267c5e6-ebf9-3d05-a0ba-4751dafebaf1",
@@ -1621,7 +1623,9 @@
               }
             }
           ],
-          "Queries": []
+          "Queries": [
+            "6b0c439b-a98f-465e-9a6e-e5c4d098f695"
+          ]
         },
         "5abe028c-d61a-383f-9714-800db41816ba": {
           "$id": "PersistentObject:5abe028c-d61a-383f-9714-800db41816ba",
@@ -1801,7 +1805,9 @@
               }
             }
           ],
-          "Queries": []
+          "Queries": [
+            "3a29e6b7-c714-4f12-856c-267ff49189d3"
+          ]
         },
         "2e716f31-059c-3b04-b4c8-0185604eab14": {
           "$id": "PersistentObject:2e716f31-059c-3b04-b4c8-0185604eab14",
@@ -1917,7 +1923,9 @@
               }
             }
           ],
-          "Queries": []
+          "Queries": [
+            "1856b942-41aa-4e7f-9b94-d64328bf2264"
+          ]
         },
         "4fab5fef-d695-3177-9d24-534be232991f": {
           "$id": "PersistentObject:4fab5fef-d695-3177-9d24-534be232991f",
@@ -1967,6 +1975,34 @@
         }
       },
       "Queries": {
+        "0f6d4805-5af9-4877-8414-aea953d02839": {
+          "$id": "Query:0f6d4805-5af9-4877-8414-aea953d02839",
+          "Offset": 10,
+          "Source": "PersonCars",
+          "AutoQuery": true,
+          "Name": "Car_PersonCars",
+          "Label": {
+            "en": "Person cars"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:2e716f31-059c-3b04-b4c8-0185604eab14"
+          },
+          "Columns": []
+        },
+        "1856b942-41aa-4e7f-9b94-d64328bf2264": {
+          "$id": "Query:1856b942-41aa-4e7f-9b94-d64328bf2264",
+          "Offset": 10,
+          "Source": "Messages",
+          "AutoQuery": true,
+          "Name": "PersonCar_Messages",
+          "Label": {
+            "en": "Messages"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:5abe028c-d61a-383f-9714-800db41816ba"
+          },
+          "Columns": []
+        },
         "26f175c1-d733-4d42-b3c1-c5e19a44ec9a": {
           "$id": "Query:26f175c1-d733-4d42-b3c1-c5e19a44ec9a",
           "Source": "Database.Persons",
@@ -1977,6 +2013,20 @@
           },
           "PersistentObject": {
             "$ref": "PersistentObject:645a9601-cf0c-3160-974d-69ed5e6b5d70"
+          },
+          "Columns": []
+        },
+        "3a29e6b7-c714-4f12-856c-267ff49189d3": {
+          "$id": "Query:3a29e6b7-c714-4f12-856c-267ff49189d3",
+          "Offset": 10,
+          "Source": "PersonCar",
+          "AutoQuery": true,
+          "Name": "Person_PersonCar",
+          "Label": {
+            "en": "Person car"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:2e716f31-059c-3b04-b4c8-0185604eab14"
           },
           "Columns": []
         },
@@ -2032,6 +2082,20 @@
           },
           "Columns": []
         },
+        "6b0c439b-a98f-465e-9a6e-e5c4d098f695": {
+          "$id": "Query:6b0c439b-a98f-465e-9a6e-e5c4d098f695",
+          "Offset": 10,
+          "Source": "Cars",
+          "AutoQuery": true,
+          "Name": "Company_Cars",
+          "Label": {
+            "en": "Cars"
+          },
+          "PersistentObject": {
+            "$ref": "PersistentObject:8c48c59c-a8a5-3699-a536-c54afe24d725"
+          },
+          "Columns": []
+        },
         "da53d933-d4ab-4db4-8085-be6664699fce": {
           "$id": "Query:da53d933-d4ab-4db4-8085-be6664699fce",
           "Source": "Database.Messages",
@@ -2055,11 +2119,22 @@
         "en": "Home"
       },
       "Groups": [],
-      "Items": []
+      "Items": [
+        {
+          "Offset": 10,
+          "Title": {
+            "en": "Companies"
+          },
+          "Name": "Companies",
+          "Query": {
+            "$ref": "Query:66993f53-af3e-4d17-b907-acefc4b80463"
+          }
+        }
+      ]
     }
   ],
   "Reports": [],
   "ServiceVersion": "5.44.0+6e65421",
-  "ModelHash": "3ZFayFdJAF8MBMP4ratZWP82c1jlgKVGUlQgj2KlKxU=",
+  "ModelHash": "NCJxEE8yL+rloUZ3wOQC4V3O6ZwRtodiLaU1BBtFJas=",
   "SeederHash": "dNjUy9U/waF+QkKW/VqUqzBx6hSr96TA/komargs96Y="
 }
